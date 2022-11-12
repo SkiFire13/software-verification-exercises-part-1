@@ -4,25 +4,25 @@
 }
     We want to prove $\forall S \in \texttt{While}, b \in \texttt{Bexp}, s, s' \in \texttt{State}$
     \begin{gather*}
-        \left<(\texttt{while}\ b\ \texttt{do}\ S);\ \texttt{if}\ b\ \texttt{then}\ S\ \texttt{else}\ skip, s\right> \Rightarrow^* s' \\
+        \instr{(\texttt{while}\ b\ \texttt{do}\ S);\ \texttt{if}\ b\ \texttt{then}\ S\ \texttt{else}\ skip}{s} \Rightarrow^* s' \\
         \iff \\
-        \left<\texttt{while}\ b\ \texttt{do}\ S, s\right> \Rightarrow^* s'
+        \instr{\texttt{while}\ b\ \texttt{do}\ S}{s} \Rightarrow^* s'
     \end{gather*}
     \begin{itemize}
         \item $(\implies)$ \vspace{0.2cm} \\
             By the decomposition lemma:\vspace*{-0.3cm}
-            \[ \left<\texttt{while}\ b\ \texttt{do}\ S, s\right> \Rightarrow^* s'' \qquad \left<\texttt{if}\ b\ \texttt{then}\ S\ \texttt{else}\ skip, s''\right> \Rightarrow^* s' \]
+            \[ \instr{\texttt{while}\ b\ \texttt{do}\ S}{s} \Rightarrow^* s'' \qquad \instr{\texttt{if}\ b\ \texttt{then}\ S\ \texttt{else}\ skip}{s''} \Rightarrow^* s' \]
             By the termination lemma $\Bool{b} s'' = \text{ff}$, so:\vspace*{-0.3cm}
-            \[ \left<\texttt{if}\ b\ \texttt{then}\ S\ \texttt{else}\ skip, s''\right> \Rightarrow \left<skip, s''\right> \Rightarrow s'' = s' \]
+            \[ \instr{\texttt{if}\ b\ \texttt{then}\ S\ \texttt{else}\ skip}{s''} \Rightarrow \instr{skip}{s''} \Rightarrow s'' = s' \]
             Thus:
-            \[ \left<\texttt{while}\ b\ \texttt{do}\ S, s\right> \Rightarrow^* s'' = s' \]
+            \[ \instr{\texttt{while}\ b\ \texttt{do}\ S}{s} \Rightarrow^* s'' = s' \]
         \item $(\impliedby)$ \vspace{0.2cm} \\
             By the termination lemma $\Bool{b} s' = \text{ff}$. \\
             By the composition lemma:\vspace*{-0.3cm}
             \begin{align*}
-                &\left<(\texttt{while}\ b\ \texttt{do}\ S);\ \texttt{if}\ b\ \texttt{then}\ S\ \texttt{else}\ skip, s\right>
-                \\&\qquad \Rightarrow^* \left<\texttt{if}\ b\ \texttt{then}\ S\ \texttt{else}\ skip, s'\right>
-                \\&\qquad \Rightarrow \left<skip, s'\right>
+                &\instr{(\texttt{while}\ b\ \texttt{do}\ S);\ \texttt{if}\ b\ \texttt{then}\ S\ \texttt{else}\ skip}{s}
+                \\&\qquad \Rightarrow^* \instr{\texttt{if}\ b\ \texttt{then}\ S\ \texttt{else}\ skip}{s'}
+                \\&\qquad \Rightarrow \instr{skip}{s'}
                 \\&\qquad \Rightarrow s'
             \end{align*}
     \end{itemize}

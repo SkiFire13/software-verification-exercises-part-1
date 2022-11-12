@@ -3,190 +3,190 @@
     \[ \texttt{while}\ b\ \texttt{do}\ S \cong_{\text{\tiny SOS}} \texttt{while}\ b\ \texttt{do}\ (\texttt{repeat}\ S\ \texttt{until} \neg b)  \]\vspace*{-0.6cm}
 }
     We want to prove $\forall S \in \texttt{While}, b \in \texttt{Bexp}, s, s' \in \texttt{State}$
-    \[ \left<\texttt{while}\ b\ \texttt{do}\ S, s\right> \Rightarrow^* s' \]\vspace*{-0.9cm}
+    \[ \instr{\texttt{while}\ b\ \texttt{do}\ S}{s} \Rightarrow^* s' \]\vspace*{-0.9cm}
     \[ \iff \]\vspace*{-0.7cm}
-    \[ \left<\texttt{while}\ b\ \texttt{do}\ (\texttt{repeat}\ S\ \texttt{until} \neg b), s\right> \Rightarrow^* s' \]
+    \[ \instr{\texttt{while}\ b\ \texttt{do}\ (\texttt{repeat}\ S\ \texttt{until} \neg b)}{s} \Rightarrow^* s' \]
     We do this by proving:
     \begin{gather*}
-        \left<\texttt{while}\ b\ \texttt{do}\ S, s\right> \Rightarrow^* s' \\
+        \instr{\texttt{while}\ b\ \texttt{do}\ S}{s} \Rightarrow^* s' \\
         \iff \\
-        \left<\texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ \texttt{repeat}\ S\ \texttt{until} \neg b, s\right> \Rightarrow^* s' \\
+        \instr{\texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ \texttt{repeat}\ S\ \texttt{until} \neg b}{s} \Rightarrow^* s' \\
         \iff \\
-        \left<\texttt{while}\ b\ \texttt{do}\ (\texttt{repeat}\ S\ \texttt{until} \neg b), s\right> \Rightarrow^* s'
+        \instr{\texttt{while}\ b\ \texttt{do}\ (\texttt{repeat}\ S\ \texttt{until} \neg b)}{s} \Rightarrow^* s'
     \end{gather*}
     Let $S_r = \texttt{repeat}\ S\ \texttt{until} \neg b$ for brevity.
     \begin{itemize}
-        \item $\left<\texttt{while}\ b\ \texttt{do}\ S, s\right> \Rightarrow^* s' \implies \left<\texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ S_r, s\right> \Rightarrow^* s'$ \\
-            By induction on the length $k$ of $\left<\texttt{while}\ b\ \texttt{do}\ S, s\right> \Rightarrow^k s'$
+        \item $\instr{\texttt{while}\ b\ \texttt{do}\ S}{s} \Rightarrow^* s' \implies \instr{\texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ S_r}{s} \Rightarrow^* s'$ \\
+            By induction on the length $k$ of $\instr{\texttt{while}\ b\ \texttt{do}\ S}{s} \Rightarrow^k s'$
             \begin{itemize}
                 \item base case $k=0$ \\
-                $\left<\texttt{while}\ b\ \texttt{do}\ S, s\right> \Rightarrow^0 s'$ is false, so the implication is trivially true.
+                $\instr{\texttt{while}\ b\ \texttt{do}\ S}{s} \Rightarrow^0 s'$ is false, so the implication is trivially true.
                 \item inductive case $k+1$ \vspace*{-0.3cm}
                 \begin{align*}
-                    &\left<\texttt{while}\ b\ \texttt{do}\ S, s\right>
-                    \\&\qquad\Rightarrow \left<\texttt{if}\ b\ \texttt{then} (S; \texttt{while}\ b\ \texttt{do}\ S)\ \texttt{else}\ skip, s\right>
+                    &\instr{\texttt{while}\ b\ \texttt{do}\ S}{s}
+                    \\&\qquad\Rightarrow \instr{\texttt{if}\ b\ \texttt{then} (S; \texttt{while}\ b\ \texttt{do}\ S)\ \texttt{else}\ skip}{s}
                     \\&\qquad\Rightarrow^k s'
                 \end{align*}
                 We then distinguish two cases:
                 \begin{itemize}
                     \item $\Bool{ b} s = \text{ff}$
                     \begin{gather*}
-                        \left<\texttt{if}\ b\ \texttt{then} (S; \texttt{while}\ b\ \texttt{do}\ S)\ \texttt{else}\ skip, s\right>
+                        \instr{\texttt{if}\ b\ \texttt{then} (S; \texttt{while}\ b\ \texttt{do}\ S)\ \texttt{else}\ skip}{s}
                         \Rightarrow
-                        \left<skip, s\right>
+                        \instr{skip}{s}
                         \Rightarrow s
                         \\
-                        \left<\texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ S_r, s\right>
+                        \instr{\texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ S_r}{s}
                         \Rightarrow
-                        \left<skip, s\right>
+                        \instr{skip}{s}
                         \Rightarrow s
                     \end{gather*}
                     \item $\Bool{ b} s = \text{tt}$
                         \begin{align*}
-                            &\left<\texttt{if}\ b\ \texttt{then} (S; \texttt{while}\ b\ \texttt{do}\ S)\ \texttt{else}\ skip, s\right>
-                            \\&\qquad\Rightarrow \left<S; \texttt{while}\ b\ \texttt{do}\ S, s\right>
+                            &\instr{\texttt{if}\ b\ \texttt{then} (S; \texttt{while}\ b\ \texttt{do}\ S)\ \texttt{else}\ skip}{s}
+                            \\&\qquad\Rightarrow \instr{S; \texttt{while}\ b\ \texttt{do}\ S}{s}
                             \\&\qquad\Rightarrow^{k-1} s'
                         \end{align*}
                         By the decomposition lemma $\exists k_1, k_2 :$
                         \begin{gather*}
                             k_1 + k_2 = k - 2 \\
-                            \left<S, s\right> \Rightarrow^{k_1} s'' \\
-                            \left<\texttt{while}\ b\ \texttt{do}\ S, s''\right> \Rightarrow^{k_2} s'
+                            \instr{S}{s} \Rightarrow^{k_1} s'' \\
+                            \instr{\texttt{while}\ b\ \texttt{do}\ S}{s''} \Rightarrow^{k_2} s'
                         \end{gather*}
                         Then
                         \begin{align*}
-                            &\left<\texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ S_r, s\right>
-                            \\&\quad\Rightarrow \left<S_r, s\right>
-                            \\&\quad\Rightarrow \left<S; \texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ S_r, s\right>
+                            &\instr{\texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ S_r}{s}
+                            \\&\quad\Rightarrow \instr{S_r}{s}
+                            \\&\quad\Rightarrow \instr{S; \texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ S_r}{s}
                             \\&\text{(By the composition lemma)}
-                            \\&\quad\Rightarrow^* \left<\texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ S_r, s''\right>
+                            \\&\quad\Rightarrow^* \instr{\texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ S_r}{s''}
                         \end{align*}
-                        And since $\left<\texttt{while}\ b\ \texttt{do}\ S, s''\right> \Rightarrow^{k_2} s'$ and $k_2 = k - 2 - k_1 \leq k$  we can apply the inductive hypothesis and get
-                        \[ \left<\texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ S_r, s''\right> \Rightarrow s' \]
+                        And since $\instr{\texttt{while}\ b\ \texttt{do}\ S}{s''} \Rightarrow^{k_2} s'$ and $k_2 = k - 2 - k_1 \leq k$  we can apply the inductive hypothesis and get
+                        \[ \instr{\texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ S_r}{s''} \Rightarrow s' \]
                 \end{itemize}
             \end{itemize}
-        \item $\left<\texttt{while}\ b\ \texttt{do}\ S, s\right> \Rightarrow^* s' \impliedby \left<\texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ S_r, s\right> \Rightarrow^* s'$ \\
-            By induction on the length $k$ of $\left<\texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ S_r, s\right> \Rightarrow^k s'$
+        \item $\instr{\texttt{while}\ b\ \texttt{do}\ S}{s} \Rightarrow^* s' \impliedby \instr{\texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ S_r}{s} \Rightarrow^* s'$ \\
+            By induction on the length $k$ of $\instr{\texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ S_r}{s} \Rightarrow^k s'$
             \begin{itemize}
                 \item base case $k=0$ \\
-                $\left<\texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ S_r, s\right> \Rightarrow^0 s'$ is false, so the implication is trivially true.
+                $\instr{\texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ S_r}{s} \Rightarrow^0 s'$ is false, so the implication is trivially true.
                 \item inductive case $k+1$ \vspace*{-0.3cm}
-                \[ \left<\texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ S_r, s\right> \Rightarrow^{k+1} s' \]
+                \[ \instr{\texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ S_r}{s} \Rightarrow^{k+1} s' \]
                 We then distinguish two cases:
                 \begin{itemize}
                     \item $\Bool{ b} s = \text{ff}$
                     \begin{gather*}
-                        \left<\texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ S_r, s\right>
+                        \instr{\texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ S_r}{s}
                         \Rightarrow
-                        \left<skip, s\right>
+                        \instr{skip}{s}
                         \Rightarrow s
                         \\
                         \begin{align*}
-                            &\left<\texttt{while}\ b\ \texttt{do}\ S, s\right>
-                            \\&\qquad\Rightarrow \left<\texttt{if}\ b\ \texttt{then} (S; \texttt{while}\ b\ \texttt{do}\ S)\ \texttt{else}\ skip, s\right>
-                            \\&\qquad\Rightarrow \left<skip, s\right>
+                            &\instr{\texttt{while}\ b\ \texttt{do}\ S}{s}
+                            \\&\qquad\Rightarrow \instr{\texttt{if}\ b\ \texttt{then} (S; \texttt{while}\ b\ \texttt{do}\ S)\ \texttt{else}\ skip}{s}
+                            \\&\qquad\Rightarrow \instr{skip}{s}
                             \\&\qquad\Rightarrow s
                         \end{align*}
                     \end{gather*}
                     \item $\Bool{ b} s = \text{tt}$
                     \begin{align*}
-                        &\left<\texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ S_r, s\right>
-                        \\&\qquad\Rightarrow \left<S_r, s\right>
-                        \\&\qquad\Rightarrow \left<S; \texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ S_r, s\right>
+                        &\instr{\texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ S_r}{s}
+                        \\&\qquad\Rightarrow \instr{S_r}{s}
+                        \\&\qquad\Rightarrow \instr{S; \texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ S_r}{s}
                         \\&\qquad\Rightarrow^k s'
                     \end{align*}
                     By the decomposition lemma $\exists k_1, k_2 :$
                     \begin{gather*}
                         k_1 + k_2 = k - 1 \\
-                        \left<S, s\right> \Rightarrow^{k_1} s'' \\
-                        \left<\texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ S_r, s''\right> \Rightarrow^{k_2} s'
+                        \instr{S}{s} \Rightarrow^{k_1} s'' \\
+                        \instr{\texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ S_r}{s''} \Rightarrow^{k_2} s'
                     \end{gather*}
                     Then
                     \begin{align*}
-                        &\left<\texttt{while}\ b\ \texttt{do}\ S, s\right>
-                        \\&\qquad\Rightarrow \left<\texttt{if}\ b\ \texttt{then} (S; \texttt{while}\ b\ \texttt{do}\ S)\ \texttt{else}\ skip, s\right>
-                        \\&\qquad\Rightarrow \left<S; \texttt{while}\ b\ \texttt{do}\ S, s\right>
+                        &\instr{\texttt{while}\ b\ \texttt{do}\ S}{s}
+                        \\&\qquad\Rightarrow \instr{\texttt{if}\ b\ \texttt{then} (S; \texttt{while}\ b\ \texttt{do}\ S)\ \texttt{else}\ skip}{s}
+                        \\&\qquad\Rightarrow \instr{S; \texttt{while}\ b\ \texttt{do}\ S}{s}
                         \\&\text{By the composition lemma}
-                        \\&\qquad\Rightarrow \left<\texttt{while}\ b\ \texttt{do}\ S, s''\right>
+                        \\&\qquad\Rightarrow \instr{\texttt{while}\ b\ \texttt{do}\ S}{s''}
                     \end{align*}
-                    And since $\left<\texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ S_r, s''\right> \Rightarrow^{k_2} s'$ and $k_2 = k - 1 - k_1 \leq k$  we can apply the inductive hypothesis and get
-                    \[ \left<\texttt{while}\ b\ \texttt{do}\ S, s''\right> \Rightarrow s' \]
+                    And since $\instr{\texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ S_r}{s''} \Rightarrow^{k_2} s'$ and $k_2 = k - 1 - k_1 \leq k$  we can apply the inductive hypothesis and get
+                    \[ \instr{\texttt{while}\ b\ \texttt{do}\ S}{s''} \Rightarrow s' \]
                 \end{itemize}
             \end{itemize}
-        \item $\left<\texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ S_r, s\right> \Rightarrow^* s' \implies \left<\texttt{while}\ b\ \texttt{do}\ S_r, s\right> \Rightarrow^* s$ \\
+        \item $\instr{\texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ S_r}{s} \Rightarrow^* s' \implies \instr{\texttt{while}\ b\ \texttt{do}\ S_r}{s} \Rightarrow^* s$ \\
             We distinguish two cases:
             \begin{itemize}
                 \item $\Bool{ b} s = \text{ff}$
                 \begin{gather*}
-                    \left<\texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ S_r, s\right>
+                    \instr{\texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ S_r}{s}
                     \Rightarrow
-                    \left<skip, s\right>
+                    \instr{skip}{s}
                     \Rightarrow s
                     \\
                     \begin{align*}
-                        &\left<\texttt{while}\ b\ \texttt{do}\ S_r, s\right>
-                        \\&\qquad\Rightarrow \left<\texttt{if}\ b\ \texttt{then} (S_r; \texttt{while}\ b\ \texttt{do}\ S_r)\ \texttt{else}\ skip, s\right>
-                        \\&\qquad\Rightarrow \left<skip, s\right>
+                        &\instr{\texttt{while}\ b\ \texttt{do}\ S_r}{s}
+                        \\&\qquad\Rightarrow \instr{\texttt{if}\ b\ \texttt{then} (S_r; \texttt{while}\ b\ \texttt{do}\ S_r)\ \texttt{else}\ skip}{s}
+                        \\&\qquad\Rightarrow \instr{skip}{s}
                         \\&\qquad\Rightarrow s
                     \end{align*}
                 \end{gather*}
                 \item $\Bool{ b} s = \text{tt}$
                 \[
-                    \left<\texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ S_r, s\right>
+                    \instr{\texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ S_r}{s}
                     \Rightarrow
-                    \left<S_r, s\right>
+                    \instr{S_r}{s}
                     \Rightarrow^* s'
                 \]
                 By the termination lemma $\Bool{ \neg b} s' = tt$ \\
                 $\implies \Bool{ b} s' = ff$
                 \begin{align*}
-                    &\left<\texttt{while}\ b\ \texttt{do}\ S_r, s\right>
-                    \\&\qquad\Rightarrow \left<\texttt{if}\ b\ \texttt{then} (S_r; \texttt{while}\ b\ \texttt{do}\ S_r)\ \texttt{else}\ skip, s\right>
-                    \\&\qquad\Rightarrow \left<S_r; \texttt{while}\ b\ \texttt{do}\ S_r, s\right>
+                    &\instr{\texttt{while}\ b\ \texttt{do}\ S_r}{s}
+                    \\&\qquad\Rightarrow \instr{\texttt{if}\ b\ \texttt{then} (S_r; \texttt{while}\ b\ \texttt{do}\ S_r)\ \texttt{else}\ skip}{s}
+                    \\&\qquad\Rightarrow \instr{S_r; \texttt{while}\ b\ \texttt{do}\ S_r}{s}
                     \\&\text{(By composition lemma)}
-                    \\&\qquad\Rightarrow^* \left<\texttt{while}\ b\ \texttt{do}\ S_r, s'\right>
-                    \\&\qquad\Rightarrow \left<\texttt{if}\ b\ \texttt{then} (S_r; \texttt{while}\ b\ \texttt{do}\ S_r)\ \texttt{else}\ skip, s'\right>
-                    \\&\qquad\Rightarrow \left<skip, s'\right>
+                    \\&\qquad\Rightarrow^* \instr{\texttt{while}\ b\ \texttt{do}\ S_r}{s'}
+                    \\&\qquad\Rightarrow \instr{\texttt{if}\ b\ \texttt{then} (S_r; \texttt{while}\ b\ \texttt{do}\ S_r)\ \texttt{else}\ skip}{s'}
+                    \\&\qquad\Rightarrow \instr{skip}{s'}
                     \\&\qquad\Rightarrow s'
                 \end{align*}
             \end{itemize}
-        \item $\left<\texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ S_r, s\right> \Rightarrow^* s' \impliedby \left<\texttt{while}\ b\ \texttt{do}\ S_r, s\right> \Rightarrow^* s$ \\
+        \item $\instr{\texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ S_r}{s} \Rightarrow^* s' \impliedby \instr{\texttt{while}\ b\ \texttt{do}\ S_r}{s} \Rightarrow^* s$ \\
             We distinguish two cases:\begin{itemize}
                 \item $\Bool{ b} s = \text{ff}$
                 \begin{gather*}
                     \begin{align*}
-                        &\left<\texttt{while}\ b\ \texttt{do}\ S_r, s\right>
-                        \\&\qquad\Rightarrow \left<\texttt{if}\ b\ \texttt{then} (S_r; \texttt{while}\ b\ \texttt{do}\ S_r)\ \texttt{else}\ skip, s\right>
-                        \\&\qquad\Rightarrow \left<skip, s\right>
+                        &\instr{\texttt{while}\ b\ \texttt{do}\ S_r}{s}
+                        \\&\qquad\Rightarrow \instr{\texttt{if}\ b\ \texttt{then} (S_r; \texttt{while}\ b\ \texttt{do}\ S_r)\ \texttt{else}\ skip}{s}
+                        \\&\qquad\Rightarrow \instr{skip}{s}
                         \\&\qquad\Rightarrow s
                     \end{align*}
                     \\
-                    \left<\texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ S_r, s\right>
+                    \instr{\texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ S_r}{s}
                     \Rightarrow
-                    \left<skip, s\right>
+                    \instr{skip}{s}
                     \Rightarrow s
                 \end{gather*}
                 \item $\Bool{ b} s = \text{tt}$
                 \begin{align*}
-                    &\left<\texttt{while}\ b\ \texttt{do}\ S_r, s\right>
-                    \\&\qquad\Rightarrow \left<\texttt{if}\ b\ \texttt{then} (S_r; \texttt{while}\ b\ \texttt{do}\ S_r)\ \texttt{else}\ skip, s\right>
-                    \\&\qquad\Rightarrow \left<S_r; \texttt{while}\ b\ \texttt{do}\ S_r, s\right>
+                    &\instr{\texttt{while}\ b\ \texttt{do}\ S_r}{s}
+                    \\&\qquad\Rightarrow \instr{\texttt{if}\ b\ \texttt{then} (S_r; \texttt{while}\ b\ \texttt{do}\ S_r)\ \texttt{else}\ skip}{s}
+                    \\&\qquad\Rightarrow \instr{S_r; \texttt{while}\ b\ \texttt{do}\ S_r}{s}
                 \end{align*}
                 By the decomposition lemma:
-                \[ \left<S_r, s\right> \Rightarrow^* s'' \qquad \left<\texttt{while}\ b\ \texttt{do}\ S_r, s''\right> \Rightarrow^* s' \]
+                \[ \instr{S_r}{s} \Rightarrow^* s'' \qquad \instr{\texttt{while}\ b\ \texttt{do}\ S_r}{s''} \Rightarrow^* s' \]
                 By the termination lemma $\Bool{ \neg b} s'' = \texttt{tt}$ \\
                 $\implies \Bool{ b} s'' = \texttt{ff}$ \\
                 Thus
                 \begin{align*}
-                    &\left<\texttt{while}\ b\ \texttt{do}\ S_r, s''\right>
-                    \\&\qquad\Rightarrow \left<\texttt{if}\ b\ \texttt{then} (S_r; \texttt{while}\ b\ \texttt{do}\ S_r)\ \texttt{else}\ skip, s''\right>
-                    \\&\qquad\Rightarrow \left<skip, s''\right>
+                    &\instr{\texttt{while}\ b\ \texttt{do}\ S_r}{s''}
+                    \\&\qquad\Rightarrow \instr{\texttt{if}\ b\ \texttt{then} (S_r; \texttt{while}\ b\ \texttt{do}\ S_r)\ \texttt{else}\ skip}{s''}
+                    \\&\qquad\Rightarrow \instr{skip}{s''}
                     \\&\qquad\Rightarrow s'' = s'
                 \end{align*}
                 And finally
                 \begin{align*}
-                    &\left<\texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ S_r, s\right>
-                    \\&\qquad\Rightarrow \left<S_r, s\right>
+                    &\instr{\texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ S_r}{s}
+                    \\&\qquad\Rightarrow \instr{S_r}{s}
                     \\&\qquad\Rightarrow^* s'' = s'
                 \end{align*}
             \end{itemize}
