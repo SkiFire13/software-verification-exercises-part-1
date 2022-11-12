@@ -1,38 +1,38 @@
 \begin{exercise}{
-    Prove that if $\instr{\texttt{repeat}\ S\ \texttt{until}\ b}{s} \Rightarrow^* s'$ then $\Bool{b} s' = \text{tt}$
+    Prove that if $\instr{\wrepeat{S}{b}}{s} \Rightarrow^* s'$ then $\Bool{b} s' = \text{tt}$
 }
     By induction on the lenght $k$ of the derivation $\instr{\texttt{repeat } S \texttt{ until } b}{s} \Rightarrow^k s'$:
     \begin{itemize}
         \item base case $k=0$: we want to prove:
-            \[ \instr{\texttt{repeat}\ S\ \texttt{until}\ b}{s} \Rightarrow^0 s' \implies \Bool{b} s' = \text{tt} \]
+            \[ \instr{\wrepeat{S}{b}}{s} \Rightarrow^0 s' \implies \Bool{b} s' = \text{tt} \]
             The premise is trivially false, so the whole implication is true;
         \item inductive case $k+1$: we want to prove:
-            \[ \instr{\texttt{repeat}\ S\ \texttt{until}\ b}{s} \Rightarrow^{k+1} s' \implies \Bool{b} s' = \text{tt} \]
+            \[ \instr{\wrepeat{S}{b}}{s} \Rightarrow^{k+1} s' \implies \Bool{b} s' = \text{tt} \]
             First, we execute a step of the derivation:
             \begin{align*}
-                &\instr{\texttt{repeat}\ S\ \texttt{until}\ b}{s}
-                \\&\qquad \Rightarrow \instr{S; \texttt{if}\ b\ \texttt{then}\ skip\ \texttt{else}\ (\texttt{repeat}\ S\ \texttt{until}\ b)}{s}
+                &\instr{\wrepeat{S}{b}}{s}
+                \\&\qquad \Rightarrow \instr{S; \texttt{if}\ b\ \texttt{then}\ skip\ \texttt{else}\ (\wrepeat{S}{b})}{s}
                 \\&\qquad \Rightarrow^k s'
             \end{align*}
             By the decomposition lemma $\exists k_1, k_2 :$
             \begin{gather*}
                 k_1 + k_2 = k \\
                 \instr{S}{s} \Rightarrow^{k_1} s'' \\
-                \instr{\texttt{if}\ b\ \texttt{then}\ skip\ \texttt{else}\ (\texttt{repeat}\ S\ \texttt{until}\ b)}{s''} \Rightarrow^{k_2} s'
+                \instr{\texttt{if}\ b\ \texttt{then}\ skip\ \texttt{else}\ (\wrepeat{S}{b})}{s''} \Rightarrow^{k_2} s'
             \end{gather*}
             We then distinguish two cases:
             \begin{itemize}
                 \item $\Bool{b} s'' = \text{tt}$:
                     \begin{align*}
-                        &\instr{\texttt{if}\ b\ \texttt{then}\ skip\ \texttt{else}\ (\texttt{repeat}\ S\ \texttt{until}\ b)}{s''}
+                        &\instr{\texttt{if}\ b\ \texttt{then}\ skip\ \texttt{else}\ (\wrepeat{S}{b})}{s''}
                         \\&\qquad \Rightarrow \instr{skip}{s''}
                         \\&\qquad \Rightarrow s'' = s'
                     \end{align*}
                     Thus $\Bool{ b} s'' = \Bool{ b} s' = \text{tt}$
                 \item $\Bool{ b} s'' = \text{ff}$
                     \begin{align*}
-                        &\instr{\texttt{if}\ b\ \texttt{then}\ skip\ \texttt{else}\ (\texttt{repeat}\ S\ \texttt{until}\ b)}{s''}
-                        \\&\qquad \Rightarrow \instr{\texttt{repeat}\ S\ \texttt{until}\ b}{s}
+                        &\instr{\texttt{if}\ b\ \texttt{then}\ skip\ \texttt{else}\ (\wrepeat{S}{b})}{s''}
+                        \\&\qquad \Rightarrow \instr{\wrepeat{S}{b}}{s}
                         \\&\qquad \Rightarrow^{k_2 - 1} s'
                     \end{align*}
                     Since $k_2 - 1 = k - k_1 - 1 \leq k$, by inductive hypothesis we have $\Bool{ b} s' = \text{tt}$

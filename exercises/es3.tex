@@ -1,20 +1,20 @@
 \begin{exercise}{
     Prove or disprove the following semantic equivalence:
-    \[ \texttt{while}\ b\ \texttt{do}\ S \cong_{\text{\tiny SOS}} \texttt{while}\ b\ \texttt{do}\ (\texttt{repeat}\ S\ \texttt{until} \neg b)  \]\vspace*{-0.6cm}
+    \[ \texttt{while}\ b\ \texttt{do}\ S \cong_{\text{\tiny SOS}} \texttt{while}\ b\ \texttt{do}\ (\wrepeat{S}{\neg b})  \]\vspace*{-0.6cm}
 }
     We want to prove $\forall S \in \texttt{While}, b \in \texttt{Bexp}, s, s' \in \texttt{State}$
     \[ \instr{\texttt{while}\ b\ \texttt{do}\ S}{s} \Rightarrow^* s' \]\vspace*{-0.9cm}
     \[ \iff \]\vspace*{-0.7cm}
-    \[ \instr{\texttt{while}\ b\ \texttt{do}\ (\texttt{repeat}\ S\ \texttt{until} \neg b)}{s} \Rightarrow^* s' \]
+    \[ \instr{\texttt{while}\ b\ \texttt{do}\ (\wrepeat{S}{\neg b})}{s} \Rightarrow^* s' \]
     We do this by proving:
     \begin{gather*}
         \instr{\texttt{while}\ b\ \texttt{do}\ S}{s} \Rightarrow^* s' \\
         \iff \\
-        \instr{\texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ \texttt{repeat}\ S\ \texttt{until} \neg b}{s} \Rightarrow^* s' \\
+        \instr{\texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ \wrepeat{S}{\neg b}}{s} \Rightarrow^* s' \\
         \iff \\
-        \instr{\texttt{while}\ b\ \texttt{do}\ (\texttt{repeat}\ S\ \texttt{until} \neg b)}{s} \Rightarrow^* s'
+        \instr{\texttt{while}\ b\ \texttt{do}\ (\wrepeat{S}{\neg b})}{s} \Rightarrow^* s'
     \end{gather*}
-    Let $S_r = \texttt{repeat}\ S\ \texttt{until} \neg b$ for brevity.
+    Let $S_r = \wrepeat{S}{\neg b}$ for brevity.
     \begin{itemize}
         \item $\instr{\texttt{while}\ b\ \texttt{do}\ S}{s} \Rightarrow^* s' \implies \instr{\texttt{if}\ \neg b\ \texttt{then}\ skip\ \texttt{else}\ S_r}{s} \Rightarrow^* s'$ \\
             By induction on the length $k$ of $\instr{\texttt{while}\ b\ \texttt{do}\ S}{s} \Rightarrow^k s'$
