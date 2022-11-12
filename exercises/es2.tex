@@ -1,26 +1,26 @@
 \begin{exercise}{
     Prove or disprove the following semantic equivalence:
-    \[ (\texttt{while}\ b\ \texttt{do}\ S);\ \texttt{if}\ b\ \texttt{then}\ S\ \texttt{else}\ skip \cong_{\text{\tiny SOS}} \texttt{while}\ b\ \texttt{do}\ S \]\vspace*{-0.6cm}
+    \[ (\wwhile{b}{S});\ \texttt{if}\ b\ \texttt{then}\ S\ \texttt{else}\ skip \cong_{\text{\tiny SOS}} \wwhile{b}{S} \]\vspace*{-0.6cm}
 }
     We want to prove $\forall S \in \texttt{While}, b \in \texttt{Bexp}, s, s' \in \texttt{State}$
     \begin{gather*}
-        \instr{(\texttt{while}\ b\ \texttt{do}\ S);\ \texttt{if}\ b\ \texttt{then}\ S\ \texttt{else}\ skip}{s} \Rightarrow^* s' \\
+        \instr{(\wwhile{b}{S});\ \texttt{if}\ b\ \texttt{then}\ S\ \texttt{else}\ skip}{s} \Rightarrow^* s' \\
         \iff \\
-        \instr{\texttt{while}\ b\ \texttt{do}\ S}{s} \Rightarrow^* s'
+        \instr{\wwhile{b}{S}}{s} \Rightarrow^* s'
     \end{gather*}
     \begin{itemize}
         \item $(\implies)$ \vspace{0.2cm} \\
             By the decomposition lemma:\vspace*{-0.3cm}
-            \[ \instr{\texttt{while}\ b\ \texttt{do}\ S}{s} \Rightarrow^* s'' \qquad \instr{\texttt{if}\ b\ \texttt{then}\ S\ \texttt{else}\ skip}{s''} \Rightarrow^* s' \]
+            \[ \instr{\wwhile{b}{S}}{s} \Rightarrow^* s'' \qquad \instr{\texttt{if}\ b\ \texttt{then}\ S\ \texttt{else}\ skip}{s''} \Rightarrow^* s' \]
             By the termination lemma $\Bool{b} s'' = \text{ff}$, so:\vspace*{-0.3cm}
             \[ \instr{\texttt{if}\ b\ \texttt{then}\ S\ \texttt{else}\ skip}{s''} \Rightarrow \instr{skip}{s''} \Rightarrow s'' = s' \]
             Thus:
-            \[ \instr{\texttt{while}\ b\ \texttt{do}\ S}{s} \Rightarrow^* s'' = s' \]
+            \[ \instr{\wwhile{b}{S}}{s} \Rightarrow^* s'' = s' \]
         \item $(\impliedby)$ \vspace{0.2cm} \\
             By the termination lemma $\Bool{b} s' = \text{ff}$. \\
             By the composition lemma:\vspace*{-0.3cm}
             \begin{align*}
-                &\instr{(\texttt{while}\ b\ \texttt{do}\ S);\ \texttt{if}\ b\ \texttt{then}\ S\ \texttt{else}\ skip}{s}
+                &\instr{(\wwhile{b}{S});\ \texttt{if}\ b\ \texttt{then}\ S\ \texttt{else}\ skip}{s}
                 \\&\qquad \Rightarrow^* \instr{\texttt{if}\ b\ \texttt{then}\ S\ \texttt{else}\ skip}{s'}
                 \\&\qquad \Rightarrow \instr{skip}{s'}
                 \\&\qquad \Rightarrow s'
