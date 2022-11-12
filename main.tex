@@ -2,6 +2,13 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 
+\usepackage{amsmath}
+\usepackage{stmaryrd}
+
+\newcounter{exercise}[section]
+\newenvironment{exercise}[1]{\refstepcounter{exercise}\par\medskip
+\noindent \textbf{Example~\theexercise.} \rmfamily #1 \vspace*{0.4cm}\newline}{}
+
 \title{
     Software Verification Exercises - Part 1
 }
