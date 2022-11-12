@@ -11,27 +11,27 @@
             First, we execute a step of the derivation:
             \begin{align*}
                 &\instr{\wrepeat{S}{b}}{s}
-                \\&\qquad \Rightarrow \instr{S; \texttt{if}\ b\ \texttt{then}\ skip\ \texttt{else}\ (\wrepeat{S}{b})}{s}
+                \\&\qquad \Rightarrow \instr{S; \wif{b}{skip}{(\wrepeat{S}{b})}}{s}
                 \\&\qquad \Rightarrow^k s'
             \end{align*}
             By the decomposition lemma $\exists k_1, k_2 :$
             \begin{gather*}
                 k_1 + k_2 = k \\
                 \instr{S}{s} \Rightarrow^{k_1} s'' \\
-                \instr{\texttt{if}\ b\ \texttt{then}\ skip\ \texttt{else}\ (\wrepeat{S}{b})}{s''} \Rightarrow^{k_2} s'
+                \instr{\wif{b}{skip}{(\wrepeat{S}{b})}}{s''} \Rightarrow^{k_2} s'
             \end{gather*}
             We then distinguish two cases:
             \begin{itemize}
                 \item $\Bool{b} s'' = \text{tt}$:
                     \begin{align*}
-                        &\instr{\texttt{if}\ b\ \texttt{then}\ skip\ \texttt{else}\ (\wrepeat{S}{b})}{s''}
+                        &\instr{\wif{b}{skip}{(\wrepeat{S}{b})}}{s''}
                         \\&\qquad \Rightarrow \instr{skip}{s''}
                         \\&\qquad \Rightarrow s'' = s'
                     \end{align*}
                     Thus $\Bool{ b} s'' = \Bool{ b} s' = \text{tt}$
                 \item $\Bool{ b} s'' = \text{ff}$
                     \begin{align*}
-                        &\instr{\texttt{if}\ b\ \texttt{then}\ skip\ \texttt{else}\ (\wrepeat{S}{b})}{s''}
+                        &\instr{\wif{b}{skip}{(\wrepeat{S}{b})}}{s''}
                         \\&\qquad \Rightarrow \instr{\wrepeat{S}{b}}{s}
                         \\&\qquad \Rightarrow^{k_2 - 1} s'
                     \end{align*}
