@@ -1,188 +1,137 @@
 \begin{exercise}{
     Prove or disprove the following semantic equivalence:
-    \[ \wwhile{b}{S} \cong_{\text{\tiny SOS}} \wwhile{b}{\wrepeat{S}{\neg b}}  \]\vspace*{-0.6cm}
+    \[ \wwhile{b}{S} \cong_{\text{\tiny SOS}} \wwhile{b}{(\wrepeat{S}{\neg b})}  \]\vspace*{-0.6cm}
 }
     We want to prove $\forall S \in \texttt{While}, b \in \texttt{Bexp}, s, s' \in \texttt{State}$
-    \[ \instr{\wwhile{b}{S}}{s} \Rightarrow^* s' \]\vspace*{-0.9cm}
-    \[ \iff \]\vspace*{-0.7cm}
-    \[ \instr{\wwhile{b}{\wrepeat{S}{\neg b}}}{s} \Rightarrow^* s' \]
-    We do this by proving:
     \begin{gather*}
         \instr{\wwhile{b}{S}}{s} \Rightarrow^* s' \\
         \iff \\
-        \instr{\wif{\neg b}{skip}{\wrepeat{S}{\neg b}}}{s} \Rightarrow^* s' \\
-        \iff \\
-        \instr{\wwhile{b}{\wrepeat{S}{\neg b}}}{s} \Rightarrow^* s'
+        \instr{\wwhile{b}{(\wrepeat{S}{\neg b})}}{s} \Rightarrow^* s'
     \end{gather*}
     Let $S_r = \wrepeat{S}{\neg b}$ for brevity.
+    We distinguish two cases:
     \begin{itemize}
-        \item $\instr{\wwhile{b}{S}}{s} \Rightarrow^* s' \implies \instr{\wif{\neg b}{skip}{S_r}}{s} \Rightarrow^* s'$ \\
-            By induction on the length $k$ of the derivation $\instr{\wwhile{b}{S}}{s} \Rightarrow^k s'$
+        \item $\Bool{b} s = \text{ff}$
+            \begin{align*}
+                &\instr{\wwhile{b}{S}}{s}
+                \\&\qquad\Rightarrow \instr{\wif{b}{(S;\wwhile{b}{S})}{skip}}{s}
+                \\&\qquad\Rightarrow \instr{skip}{s}
+                \\&\qquad\Rightarrow s
+                \\
+                &\instr{\wwhile{b}{S_r}}{s}
+                \\&\qquad\Rightarrow \instr{\wif{b}{(S_r; \wwhile{b}{S_r})}{skip}}{s}
+                \\&\qquad\Rightarrow \instr{skip}{s}
+                \\&\qquad\Rightarrow s
+            \end{align*}
+        \item $\Bool{b} s = \text{tt}$
+            \begin{align*}
+                &\instr{\wwhile{b}{S}}{s}
+                \\&\qquad\Rightarrow \instr{\wif{b}{(S;\wwhile{b}{S})}{skip}}{s}
+                \\&\qquad\Rightarrow \instr{S;\wwhile{b}{S}}{s}
+                \\
+                &\instr{\wwhile{b}{S_r}}{s}
+                \\&\qquad\Rightarrow \instr{\wif{b}{(S_r; \wwhile{b}{S_r})}{skip}}{s}
+                \\&\qquad\Rightarrow \instr{S_r; \wwhile{b}{S_r}}{s}
+            \end{align*}
             \begin{itemize}
-                \item base case $k=0$ \\
-                $\instr{\wwhile{b}{S}}{s} \Rightarrow^0 s'$ is false, so the implication is trivially true.
-                \item inductive case $k+1$ \vspace*{-0.3cm}
-                \begin{align*}
-                    &\instr{\wwhile{b}{S}}{s}
-                    \\&\qquad\Rightarrow \instr{\wif{b}{(S; \wwhile{b}{S})}{skip}}{s}
-                    \\&\qquad\Rightarrow^k s'
-                \end{align*}
-                We then distinguish two cases:
-                \begin{itemize}
-                    \item $\Bool{b} s = \text{ff}$
-                    \begin{gather*}
-                        \instr{\wif{b}{(S; \wwhile{b}{S})}{skip}}{s}
-                        \Rightarrow
-                        \instr{skip}{s}
-                        \Rightarrow s
-                        \\
-                        \instr{\wif{\neg b}{skip}{S_r}}{s}
-                        \Rightarrow
-                        \instr{skip}{s}
-                        \Rightarrow s
-                    \end{gather*}
-                    \item $\Bool{b} s = \text{tt}$
+                \item $(\implies)$ \vspace{0.2cm} \\
+                    By induction on the length $k$ of the derivation $\instr{S;\wwhile{b}{S}}{s} \Rightarrow^k s'$
+                    \begin{itemize}
+                        \item base case $k=0$ \\
+                            $\instr{S;\wwhile{b}{S}}{s} \Rightarrow^0 s'$ is trivially false, so the implication is true.
+                        \item inductive case $k+1$ \vspace*{-0.3cm}
+                            \[ \instr{S;\wwhile{b}{S}}{s} \Rightarrow^{k+1} s' \]
+                            By the decomposition lemma $\exists k_1, k_2 :$
+                            \begin{gather*}
+                                k_1 + k_2 = k \qquad\qquad \instr{S}{s} \Rightarrow^{k_1} s'' \\
+                                \instr{\wwhile{b}{S}}{s''} \Rightarrow^{k_2} s'
+                            \end{gather*}
+                            Thus, by the composition lemma:
+                            \begin{align*}
+                                &\instr{S_r; \wwhile{b}{S_r}}{s}
+                                \\&\qquad\Rightarrow \instr{S;\wif{\neg b}{skip}{S_r}; \wwhile{b}{S_r}}{s}
+                                \\&\qquad\Rightarrow^* \instr{\wif{\neg b}{skip}{S_r}; \wwhile{b}{S_r}}{s''}
+                            \end{align*}
+                            We then distinguish two cases:
+                            \begin{itemize}
+                                \item $\Bool{b} s'' = \text{ff}$
+                                    \begin{align*}
+                                        &\instr{\wwhile{b}{S}}{s''}
+                                        \\&\qquad\Rightarrow \instr{\wif{b}{(S; \wwhile{b}{S})}{skip}}{s''}
+                                        \\&\qquad\Rightarrow \instr{skip}{s''}
+                                        \\&\qquad\Rightarrow s''
+                                        \\
+                                        &\instr{\wif{\neg b}{skip}{S_r}; \wwhile{b}{S_r}}{s''}
+                                        \\&\qquad\Rightarrow \instr{skip; \wwhile{b}{S_r}}{s''}
+                                        \\&\qquad\Rightarrow \instr{\wwhile{b}{S_r}}{s''}
+                                        \\&\qquad\Rightarrow \instr{\wif{b}{(S_r; \wwhile{b}{S_r})}{skip}}{s''}
+                                        \\&\qquad\Rightarrow \instr{skip}{s''}
+                                        \\&\qquad\Rightarrow s''
+                                    \end{align*}
+                                \item $\Bool{b} s'' = \text{tt}$
+                                    \begin{align*}
+                                        &\instr{\wwhile{b}{S}}{s''}
+                                        \\&\qquad\Rightarrow \instr{\wif{b}{(S; \wwhile{b}{S})}{skip}}{s''}
+                                        \\&\qquad\Rightarrow \instr{S; \wwhile{b}{S}}{s''}
+                                        \\&\qquad\Rightarrow^{k_2 - 2} s'
+                                        \\
+                                        &\instr{\wif{\neg b}{skip}{S_r}; \wwhile{b}{S_r}}{s''}
+                                        \\&\qquad\Rightarrow \instr{S_r; \wwhile{b}{S_r}}{s''}
+                                        \\&\qquad\Rightarrow \instr{\wif{\neg b}{skip}{S_r}; \wwhile{b}{S_r}}{s''}
+                                    \end{align*}
+                                    Since $\instr{S; \wwhile{b}{S}}{s''} \Rightarrow^{k_2 - 2} s'$ and $k_2 - 2 = k - k_1 - 2 \leq k$ the inductive hypothesis holds and thus $\instr{S_r; \wwhile{b}{S_r}}{s''} \Rightarrow^* s'$
+                            \end{itemize}
+                    \end{itemize}
+                \item $(\impliedby)$ \vspace{0.2cm} \\
+                    By induction on the length $k$ of the derivation $\instr{S_r; \wwhile{b}{S_r}}{s} \Rightarrow^k s'$
+                    \begin{itemize}
+                        \item base case $k=0$ \\
+                            $\instr{S_r; \wwhile{b}{S_r}}{s} \Rightarrow^0 s'$ is trivially false, so the implication is true.
+                        \item inductive case $k+1$ \vspace*{-0.3cm}
+                        \[ \instr{S_r; \wwhile{b}{S_r}}{s} \Rightarrow^{k+1} s' \]
                         \begin{align*}
-                            &\instr{\wif{b}{(S; \wwhile{b}{S})}{skip}}{s}
-                            \\&\qquad\Rightarrow \instr{S; \wwhile{b}{S}}{s}
-                            \\&\qquad\Rightarrow^{k-1} s'
+                            &\instr{S_r; \wwhile{b}{S_r}}{s}
+                            \\&\qquad\Rightarrow \instr{S; \wif{\neg b}{skip}{S_r}; \wwhile{b}{S_r}}{s}
+                            \\&\qquad\Rightarrow^{k} s'
                         \end{align*}
                         By the decomposition lemma $\exists k_1, k_2 :$
                         \begin{gather*}
-                            k_1 + k_2 = k - 2 \qquad\quad
-                            \instr{S}{s} \Rightarrow^{k_1} s'' \qquad\quad
-                            \instr{\wwhile{b}{S}}{s''} \Rightarrow^{k_2} s'
+                            k_1 + k_2 = k - 1 \qquad\qquad\qquad \instr{S}{s} \Rightarrow^{k_1} s'' \\
+                            \instr{\wif{\neg b}{skip}{S_r}; \wwhile{b}{S_r}}{s''} \Rightarrow^{k_2} s'
                         \end{gather*}
-                        Then
+                        Then, by the composition lemma:
                         \begin{align*}
-                            &\instr{\wif{\neg b}{skip}{S_r}}{s}
-                            \\&\quad\Rightarrow \instr{S_r}{s}
-                            \\&\quad\Rightarrow \instr{S; \wif{\neg b}{skip}{S_r}}{s}
-                            &&\text{(By the composition lemma)}
-                            \\&\quad\Rightarrow^* \instr{\wif{\neg b}{skip}{S_r}}{s''}
+                            &\instr{S; \wwhile{b}{S}}{s}
+                            \\&\qquad\Rightarrow^* \instr{\wwhile{b}{S}}{s''}
+                            \\&\qquad\Rightarrow \instr{\wif{b}{(S; \wwhile{b}{S})}{skip}}{s''}
                         \end{align*}
-                        And since $\instr{\wwhile{b}{S}}{s''} \Rightarrow^{k_2} s'$ and $k_2 = k - 2 - k_1 \leq k$  we can apply the inductive hypothesis and get
-                        \[ \instr{\wif{\neg b}{skip}{S_r}}{s''} \Rightarrow s' \]
-                \end{itemize}
-            \end{itemize}
-        \item $\instr{\wwhile{b}{S}}{s} \Rightarrow^* s' \impliedby \instr{\wif{\neg b}{skip}{S_r}}{s} \Rightarrow^* s'$ \\
-            By induction on the length $k$ of the derivation $\instr{\wif{\neg b}{skip}{S_r}}{s} \Rightarrow^k s'$
-            \begin{itemize}
-                \item base case $k=0$ \\
-                $\instr{\wif{\neg b}{skip}{S_r}}{s} \Rightarrow^0 s'$ is false, so the implication is trivially true.
-                \item inductive case $k+1$ \vspace*{-0.3cm}
-                \[ \instr{\wif{\neg b}{skip}{S_r}}{s} \Rightarrow^{k+1} s' \]
-                We then distinguish two cases:
-                \begin{itemize}
-                    \item $\Bool{b} s = \text{ff}$
-                    \begin{align*}
-                        &\instr{\wif{\neg b}{skip}{S_r}}{s}
-                        \Rightarrow
-                        \instr{skip}{s}
-                        \Rightarrow s
-                        \\
-                        &\instr{\wwhile{b}{S}}{s}
-                        \\&\qquad\Rightarrow \instr{\wif{b}{(S; \wwhile{b}{S})}{skip}}{s}
-                        \\&\qquad\Rightarrow \instr{skip}{s}
-                        \\&\qquad\Rightarrow s
-                    \end{align*}
-                    \item $\Bool{b} s = \text{tt}$
-                    \begin{align*}
-                        &\instr{\wif{\neg b}{skip}{S_r}}{s}
-                        \\&\qquad\Rightarrow \instr{S_r}{s}
-                        \\&\qquad\Rightarrow \instr{S; \wif{\neg b}{skip}{S_r}}{s}
-                        \\&\qquad\Rightarrow^k s'
-                    \end{align*}
-                    By the decomposition lemma $\exists k_1, k_2 :$
-                    \begin{gather*}
-                        k_1 + k_2 = k - 1 \qquad\qquad
-                        \instr{S}{s} \Rightarrow^{k_1} s'' \\
-                        \instr{\wif{\neg b}{skip}{S_r}}{s''} \Rightarrow^{k_2} s'
-                    \end{gather*}
-                    Then
-                    \begin{align*}
-                        &\instr{\wwhile{b}{S}}{s}
-                        \\&\qquad\Rightarrow \instr{\wif{b}{(S; \wwhile{b}{S})}{skip}}{s}
-                        \\&\qquad\Rightarrow \instr{S; \wwhile{b}{S}}{s}
-                        \qquad\qquad\qquad\text{(By the composition lemma)}
-                        \\&\qquad\Rightarrow^* \instr{\wwhile{b}{S}}{s''}
-                    \end{align*}
-                    And since $\instr{\wif{\neg b}{skip}{S_r}}{s''} \Rightarrow^{k_2} s'$ and $k_2 = k - 1 - k_1 \leq k$  we can apply the inductive hypothesis and get:
-                    \[ \instr{\wwhile{b}{S}}{s''} \Rightarrow s' \]
-                \end{itemize}
-            \end{itemize}
-        \item $\instr{\wif{\neg b}{skip}{S_r}}{s} \Rightarrow^* s' \implies \instr{\wwhile{b}{S}_r}{s} \Rightarrow^* s$ \\
-            We distinguish two cases:
-            \begin{itemize}
-                \item $\Bool{b} s = \text{ff}$
-                \begin{align*}
-                    &\instr{\wif{\neg b}{skip}{S_r}}{s}
-                    \Rightarrow
-                    \instr{skip}{s}
-                    \Rightarrow s
-                    \\
-                    &\instr{\wwhile{b}{S}_r}{s}
-                    \\&\qquad\Rightarrow \instr{\wif{b}{(S_r; \wwhile{b}{S_r})}{skip}}{s}
-                    \\&\qquad\Rightarrow \instr{skip}{s}
-                    \\&\qquad\Rightarrow s
-                \end{align*}
-                \item $\Bool{b} s = \text{tt}$
-                \[
-                    \instr{\wif{\neg b}{skip}{S_r}}{s}
-                    \Rightarrow
-                    \instr{S_r}{s}
-                    \Rightarrow^* s'
-                \]
-                By the termination lemma $\Bool{\neg b} s' = \text{tt} \implies \Bool{b} s' = \text{ff}$
-                \begin{align*}
-                    &\instr{\wwhile{b}{S}_r}{s}
-                    \\&\qquad\Rightarrow \instr{\wif{b}{(S_r; \wwhile{b}{S_r})}{skip}}{s}
-                    \\&\qquad\Rightarrow \instr{S_r; \wwhile{b}{S}_r}{s}
-                    \qquad\qquad\text{(By composition lemma)}
-                    \\&\qquad\Rightarrow^* \instr{\wwhile{b}{S}_r}{s'}
-                    \\&\qquad\Rightarrow \instr{\wif{b}{(S_r; \wwhile{b}{S_r})}{skip}}{s'}
-                    \\&\qquad\Rightarrow \instr{skip}{s'}
-                    \\&\qquad\Rightarrow s'
-                \end{align*}
-            \end{itemize}
-        \item $\instr{\wif{\neg b}{skip}{S_r}}{s} \Rightarrow^* s' \impliedby \instr{\wwhile{b}{S}_r}{s} \Rightarrow^* s$ \\
-            We distinguish two cases:\begin{itemize}
-                \item $\Bool{b} s = \text{ff}$
-                \begin{gather*}
-                    \begin{align*}
-                        &\instr{\wwhile{b}{S}_r}{s}
-                        \\&\qquad\Rightarrow \instr{\wif{b}{(S_r; \wwhile{b}{S_r})}{skip}}{s}
-                        \\&\qquad\Rightarrow \instr{skip}{s}
-                        \\&\qquad\Rightarrow s
-                    \end{align*}
-                    \\
-                    \instr{\wif{\neg b}{skip}{S_r}}{s}
-                    \Rightarrow
-                    \instr{skip}{s}
-                    \Rightarrow s
-                \end{gather*}
-                \item $\Bool{b} s = \text{tt}$
-                \begin{align*}
-                    &\instr{\wwhile{b}{S}_r}{s}
-                    \\&\qquad\Rightarrow \instr{\wif{b}{(S_r; \wwhile{b}{S_r})}{skip}}{s}
-                    \\&\qquad\Rightarrow \instr{S_r; \wwhile{b}{S}_r}{s}
-                \end{align*}
-                By the decomposition lemma:
-                \[ \instr{S_r}{s} \Rightarrow^* s'' \qquad \instr{\wwhile{b}{S}_r}{s''} \Rightarrow^* s' \]
-                By the termination lemma $\Bool{\neg b} s'' = \texttt{tt} \implies \Bool{b} s'' = \texttt{ff}$ \\
-                Thus
-                \begin{align*}
-                    &\instr{\wwhile{b}{S}_r}{s''}
-                    \\&\qquad\Rightarrow \instr{\wif{b}{(S_r; \wwhile{b}{S_r})}{skip}}{s''}
-                    \\&\qquad\Rightarrow \instr{skip}{s''}
-                    \\&\qquad\Rightarrow s'' = s'
-                \end{align*}
-                And finally
-                \begin{align*}
-                    &\instr{\wif{\neg b}{skip}{S_r}}{s}
-                    \\&\qquad\Rightarrow \instr{S_r}{s}
-                    \\&\qquad\Rightarrow^* s'' = s'
-                \end{align*}
+                        We distinguish two cases:
+                        \begin{itemize}
+                            \item $\Bool{b} s'' = \text{ff}$
+                                \begin{align*}
+                                    &\instr{\wif{\neg b}{skip}{S_r}; \wwhile{b}{S_r}}{s''}
+                                    \\&\qquad\Rightarrow \instr{skip; \wwhile{b}{S_r}}{s''}
+                                    \\&\qquad\Rightarrow \instr{\wwhile{b}{S_r}}{s''}
+                                    \\&\qquad\Rightarrow \instr{\wif{b}{(S_r; \wwhile{b}{S_r})}{skip}}{s''}
+                                    \\&\qquad\Rightarrow \instr{skip}{s''}
+                                    \\&\qquad\Rightarrow s''
+                                    \\
+                                    &\instr{\wif{b}{(S; \wwhile{b}{S})}{skip}}{s''}
+                                    \\&\qquad\Rightarrow \instr{skip}{s''}
+                                    \\&\qquad\Rightarrow s''
+                                \end{align*}
+                            \item $\Bool{b} s'' = \text{tt}$
+                                \begin{align*}
+                                    &\instr{\wif{\neg b}{skip}{S_r}; \wwhile{b}{S_r}}{s''}
+                                    \\&\qquad\Rightarrow \instr{S_r; \wwhile{b}{S_r}}{s''}
+                                    \\&\qquad\Rightarrow^{k_2 - 1} s'
+                                    \\
+                                    &\instr{\wif{b}{(S; \wwhile{b}{S})}{skip}}{s''}
+                                    \\&\qquad\Rightarrow \instr{S; \wwhile{b}{S}}{s''}
+                                \end{align*}
+                                Since $\instr{S_r; \wwhile{b}{S_r}}{s''} \Rightarrow^{k_2 - 1} s'$ and $k_2 - 1 = k - k_1 - 2 \leq k$ the inductive hypothesis holds and thus $\instr{S; \wwhile{b}{S}}{s''} \Rightarrow^* s'$
+                        \end{itemize}
+                    \end{itemize}
             \end{itemize}
     \end{itemize}
 \end{exercise}
