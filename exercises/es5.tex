@@ -1,0 +1,60 @@
+\begin{exercise}{
+    Prove or disprove the following semantic equivalence:
+    \[ \wwhile{b}{S} \cong_{\text{\tiny SOS}} \wwhile{b}{(\wwhile{b}{S})}  \]\vspace*{-0.6cm}
+}
+    We want to prove $\forall S \in \texttt{While}, b \in \texttt{Bexp}, s, s' \in \texttt{State}$
+    \begin{gather*}
+        \instr{\wwhile{b}{S}}{s} \Rightarrow^* s' \\
+        \iff \\
+        \instr{\wwhile{b}{(\wwhile{b}{S})}}{s} \Rightarrow^* s'
+    \end{gather*}
+    We distinguish two cases:
+    \begin{itemize}
+        \item $\Bool{b} s = \text{ff}$
+            \begin{align*}
+                &\instr{\wwhile{b}{S}}{s}
+                \\&\qquad\Rightarrow \instr{\wif{b}{(S; \wwhile{b}{S})}{skip}}{s}
+                \\&\qquad\Rightarrow \instr{skip}{s}
+                \\&\qquad\Rightarrow s
+                \\
+                &\instr{\wwhile{b}{(\wwhile{b}{S})}}{s}
+                \\&\qquad\Rightarrow \instr{\wif{b}{(\wwhile{b}{S}; \wwhile{b}{(\wwhile{b}{S})})}{skip}}{s}
+                \\&\qquad\Rightarrow \instr{skip}{s}
+                \\&\qquad\Rightarrow s
+            \end{align*}
+        \item $\Bool{b} s = \text{tt}$
+            \begin{align*}
+                &\instr{\wwhile{b}{(\wwhile{b}{S})}}{s}
+                \\&\qquad\Rightarrow \instr{\wif{b}{(\wwhile{b}{S}; \wwhile{b}{(\wwhile{b}{S})})}{skip}}{s}
+                \\&\qquad\Rightarrow \instr{\wwhile{b}{S}; \wwhile{b}{(\wwhile{b}{S})}}{s}
+            \end{align*}
+            \begin{itemize}
+                \item $(\implies)$
+                    \[ \instr{\wwhile{b}{S}}{s} \Rightarrow^* s' \]
+                    By the termination lemma $\Bool{b} s' = \text{ff}$. Then, by the composition lemma:
+                    \begin{align*}
+                        &\instr{\wwhile{b}{S}; \wwhile{b}{(\wwhile{b}{S})}}{s}
+                        \\&\qquad\Rightarrow^* \instr{\wwhile{b}{(\wwhile{b}{S})}}{s'}
+                        \\&\qquad\Rightarrow \instr{\wif{b}{(\wwhile{b}{S}; \wwhile{b}{(\wwhile{b}{S})})}{skip}}{s'}
+                        \\&\qquad\Rightarrow \instr{skip}{s'}
+                        \\&\qquad\Rightarrow s'
+                    \end{align*}
+                \item $(\impliedby)$
+                    \[ \instr{\wwhile{b}{S}; \wwhile{b}{(\wwhile{b}{S})}}{s} \Rightarrow^* s' \]
+                    By the decomposition lemma:
+                    \[
+                        \instr{\wwhile{b}{S}}{s} \Rightarrow^* s''
+                        \qquad
+                        \instr{\wwhile{b}{(\wwhile{b}{S})}}{s''} \Rightarrow^* s'
+                    \]
+                    By the termination lemma $\Bool{b} s'' = \text{ff}$. Thus:
+                    \begin{align*}
+                        &\instr{\wwhile{b}{(\wwhile{b}{S})}}{s''}
+                        \\&\qquad\Rightarrow \instr{\wif{b}{(\wwhile{b}{S}; \wwhile{b}{(\wwhile{b}{S})})}{skip}}{s''}
+                        \\&\qquad\Rightarrow \instr{skip}{s''}
+                        \\&\qquad\Rightarrow s'' = s'
+                    \end{align*}
+                    Thus $\instr{\wwhile{b}{S}}{s} \Rightarrow^* s'' = s'$
+            \end{itemize}
+    \end{itemize}
+\end{exercise}
