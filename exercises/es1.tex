@@ -16,7 +16,7 @@
             \end{align*}
             By the decomposition lemma $\exists k_1, k_2 :$
             \begin{gather*}
-                k_1 + k_2 = k \\
+                k_1 + k_2 = k \qquad\qquad\qquad\qquad
                 \instr{S}{s} \Rightarrow^{k_1} s'' \\
                 \instr{\wif{b}{skip}{(\wrepeat{S}{b})}}{s''} \Rightarrow^{k_2} s'
             \end{gather*}
@@ -28,14 +28,14 @@
                         \\&\qquad \Rightarrow \instr{skip}{s''}
                         \\&\qquad \Rightarrow s'' = s'
                     \end{align*}
-                    Thus $\Bool{ b} s'' = \Bool{ b} s' = \text{tt}$
-                \item $\Bool{ b} s'' = \text{ff}$
+                    Thus $\Bool{b} s' = \Bool{b} s'' = \text{tt}$
+                \item $\Bool{b} s'' = \text{ff}$
                     \begin{align*}
                         &\instr{\wif{b}{skip}{(\wrepeat{S}{b})}}{s''}
                         \\&\qquad \Rightarrow \instr{\wrepeat{S}{b}}{s}
                         \\&\qquad \Rightarrow^{k_2 - 1} s'
                     \end{align*}
-                    Since $k_2 - 1 = k - k_1 - 1 \leq k$, by inductive hypothesis we have $\Bool{ b} s' = \text{tt}$
+                    Since $k_2 - 1 = k - k_1 - 1 \leq k$, by inductive hypothesis we have $\Bool{b} s' = \text{tt}$
             \end{itemize}
     \end{itemize}
 \end{exercise}

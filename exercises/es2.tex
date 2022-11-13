@@ -18,7 +18,7 @@
             \[ \instr{\wwhile{b}{S}}{s} \Rightarrow^* s'' = s' \]
         \item $(\impliedby)$ \vspace{0.2cm} \\
             By the termination lemma $\Bool{b} s' = \text{ff}$. \\
-            By the composition lemma:\vspace*{-0.3cm}
+            Then by the composition lemma:\vspace*{-0.3cm}
             \begin{align*}
                 &\instr{(\wwhile{b}{S});\ \wif{b}{S}{skip}}{s}
                 \\&\qquad \Rightarrow^* \instr{\wif{b}{S}{skip}}{s'}

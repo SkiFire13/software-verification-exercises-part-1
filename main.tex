@@ -4,10 +4,12 @@
 
 \usepackage{amsmath}
 \usepackage{stmaryrd}
+\usepackage[margin=1in]{geometry}
 
 \newcounter{exercise}[section]
 \newenvironment{exercise}[1]{\refstepcounter{exercise}\par\medskip
-\noindent \textbf{Exercise~\theexercise.} \rmfamily #1 \vspace*{0.4cm}\newline}{}
+\noindent \textbf{Exercise~\theexercise.} \rmfamily #1 \vspace*{0.4cm}\newline
+\noindent \textbf{Solution.} \rmfamily}{}
 
 \newcommand{\Bool}[1]{\mathcal{B} \llbracket #1 \rrbracket}
 \newcommand{\instr}[2]{\left<#1, #2\right>}
