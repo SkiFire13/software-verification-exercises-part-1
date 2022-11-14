@@ -43,7 +43,7 @@
                             \[ \instr{S;\wwhile{b}{S}}{s} \Rightarrow^{k+1} s' \]
                             By the decomposition lemma $\exists k_1, k_2 :$
                             \begin{gather*}
-                                k_1 + k_2 = k \qquad\qquad \instr{S}{s} \Rightarrow^{k_1} s'' \\
+                                k_1 + k_2 = k + 1\qquad\qquad \instr{S}{s} \Rightarrow^{k_1} s'' \\
                                 \instr{\wwhile{b}{S}}{s''} \Rightarrow^{k_2} s'
                             \end{gather*}
                             Thus, by the composition lemma:
@@ -77,9 +77,8 @@
                                         \\
                                         &\instr{\wif{\neg b}{skip}{S_r}; \wwhile{b}{S_r}}{s''}
                                         \\&\qquad\Rightarrow \instr{S_r; \wwhile{b}{S_r}}{s''}
-                                        \\&\qquad\Rightarrow \instr{\wif{\neg b}{skip}{S_r}; \wwhile{b}{S_r}}{s''}
                                     \end{align*}
-                                    Since $\instr{S; \wwhile{b}{S}}{s''} \Rightarrow^{k_2 - 2} s'$ and $k_2 - 2 = k - k_1 - 2 \leq k$ the inductive hypothesis holds and thus $\instr{S_r; \wwhile{b}{S_r}}{s''} \Rightarrow^* s'$
+                                    Since $\instr{S; \wwhile{b}{S}}{s''} \Rightarrow^{k_2 - 2} s'$ and $k_2 - 2 = k - k_1 - 1 \leq k$ the inductive hypothesis holds and thus $\instr{S_r; \wwhile{b}{S_r}}{s''} \Rightarrow^* s'$
                             \end{itemize}
                     \end{itemize}
                 \item $(\impliedby)$ \vspace{0.2cm} \\
@@ -96,7 +95,7 @@
                         \end{align*}
                         By the decomposition lemma $\exists k_1, k_2 :$
                         \begin{gather*}
-                            k_1 + k_2 = k - 1 \qquad\qquad\qquad \instr{S}{s} \Rightarrow^{k_1} s'' \\
+                            k_1 + k_2 = k \qquad\qquad\qquad \instr{S}{s} \Rightarrow^{k_1} s'' \\
                             \instr{\wif{\neg b}{skip}{S_r}; \wwhile{b}{S_r}}{s''} \Rightarrow^{k_2} s'
                         \end{gather*}
                         Then, by the composition lemma:
@@ -129,7 +128,7 @@
                                     &\instr{\wif{b}{(S; \wwhile{b}{S})}{skip}}{s''}
                                     \\&\qquad\Rightarrow \instr{S; \wwhile{b}{S}}{s''}
                                 \end{align*}
-                                Since $\instr{S_r; \wwhile{b}{S_r}}{s''} \Rightarrow^{k_2 - 1} s'$ and $k_2 - 1 = k - k_1 - 2 \leq k$ the inductive hypothesis holds and thus $\instr{S; \wwhile{b}{S}}{s''} \Rightarrow^* s'$
+                                Since $\instr{S_r; \wwhile{b}{S_r}}{s''} \Rightarrow^{k_2 - 1} s'$ and $k_2 - 1 = k - k_1 - 1 \leq k$ the inductive hypothesis holds and thus $\instr{S; \wwhile{b}{S}}{s''} \Rightarrow^* s'$
                         \end{itemize}
                     \end{itemize}
             \end{itemize}

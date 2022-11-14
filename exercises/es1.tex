@@ -32,7 +32,7 @@
                 \item $\Bool{b} s'' = \text{ff}$
                     \begin{align*}
                         &\instr{\wif{b}{skip}{(\wrepeat{S}{b})}}{s''}
-                        \\&\qquad \Rightarrow \instr{\wrepeat{S}{b}}{s}
+                        \\&\qquad \Rightarrow \instr{\wrepeat{S}{b}}{s''}
                         \\&\qquad \Rightarrow^{k_2 - 1} s'
                     \end{align*}
                     Since $k_2 - 1 = k - k_1 - 1 \leq k$, by inductive hypothesis we have $\Bool{b} s' = \text{tt}$
