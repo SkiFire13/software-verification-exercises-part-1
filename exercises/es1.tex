@@ -1,6 +1,8 @@
 \begin{exercise}{
     Prove that if $\instr{\wrepeat{S}{b}}{s} \Rightarrow^* s'$ then $\Bool{b} s' = \text{tt}$
 }
+    We want to prove $\forall S \in \texttt{While}, b \in \texttt{Bexp}, s, s' \in \texttt{State}$
+    \[ \instr{\wrepeat{S}{b}}{s} \Rightarrow^* s' \implies \Bool{b} s' = \text{tt} \]
     By induction on the lenght $k$ of the derivation $\instr{\texttt{repeat } S \texttt{ until } b}{s} \Rightarrow^k s'$:
     \begin{itemize}
         \item base case $k=0$: we want to prove:
@@ -14,7 +16,7 @@
                 \\&\qquad \Rightarrow \instr{S; \wif{b}{skip}{(\wrepeat{S}{b})}}{s}
                 \\&\qquad \Rightarrow^k s'
             \end{align*}
-            By the decomposition lemma $\exists k_1, k_2 :$
+            By the decomposition lemma $\exists k_1, k_2 \in \mathbb{N}, s'' \in \texttt{State} :$
             \begin{gather*}
                 k_1 + k_2 = k \qquad\qquad\qquad\qquad
                 \instr{S}{s} \Rightarrow^{k_1} s'' \\
