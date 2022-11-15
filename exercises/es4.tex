@@ -1,3 +1,141 @@
-\begin{exercise}{TODO}
-    TODO
+\begin{exercise}{
+    Assume that the language \texttt{While} includes a new iterative command
+    \[ \wwexitif{b}{S}{b'} \]
+    where $b, b' \in \texttt{Bexpr}$ and $S \in \texttt{Stm}$, whose informal semantics goes as follows: this behaves like a standard while-loop $\wwhile{b}{S}$ where at the end of any iteration of the body $S$ the Boolean expression $b'$ is evaluated and if $b'$ is evaluated to true then the loop is terminated (with no change to the current state).
+    \begin{enumerate}
+        \item Define the small step operational semantics of this new iterative command.
+        \item Prove the following semantic equivalence:
+        \[ \wwexitif{b}{S}{\neg b}\ \cong_{\text{\tiny SOS}}\ \wwhile{b}{S} \]
+    \end{enumerate}
+}
+    \begin{enumerate}
+        \item We define the small step operational semantics of $S_{we}$ with the following derivation rule:
+            \begin{align*}
+                &\instr{\wwexitif{b}{S}{b'}}{s}
+                \\&\quad\ \ \Rightarrow \instr{\wif{b}{(S; \wif{b'}{skip}{\wwexitif{b}{S}{b'}})}{skip}}{s}
+            \end{align*}
+        \item We want to prove $\forall S \in \texttt{Stm}, b \in \texttt{Bexp}, s, s' \in \texttt{State}$
+            \begin{gather*}
+                \instr{\wwexitif{b}{S}{\neg b}}{s} \Rightarrow^* s' \\
+                \iff \\
+                \instr{\wwhile{b}{S}}{s} \Rightarrow^* s'
+            \end{gather*}
+            Let $S_{we} = \wwexitif{b}{S}{\neg b}$ for brevity.
+            We first distinguish two cases:
+            \begin{itemize}
+                \item $\Bool{b} s = \text{ff}$
+                    \begin{align*}
+                        &\instr{\wwexitif{b}{S}{\neg g}}{s}
+                        \\&\quad\ \ \Rightarrow \instr{\wif{b}{(S; \wif{\neg b}{skip}{S_{we}})}{skip}}{s}
+                        \\&\quad\ \ \Rightarrow \instr{skip}{s}
+                        \\&\quad\ \ \Rightarrow s
+                        \\
+                        &\instr{\wwhile{b}{S}}{s}
+                        \\&\quad\ \ \Rightarrow \instr{\wif{b}{(S; \wwhile{b}{S})}{skip}}{s}
+                        \\&\quad\ \ \Rightarrow \instr{skip}{s}
+                        \\&\quad\ \ \Rightarrow s
+                    \end{align*}
+                \item $\Bool{b} s = \text{tt}$
+                    \begin{align*}
+                        &\instr{S_{we}}{s}
+                        \\&\quad\ \ \Rightarrow \instr{\wif{b}{(S; \wif{\neg b}{skip}{S_{we}})}{skip}}{s}
+                        \\&\quad\ \ \Rightarrow \instr{S; \wif{\neg b}{skip}{S_{we}}}{s}
+                        \\
+                        &\instr{\wwhile{b}{S}}{s}
+                        \\&\quad\ \ \Rightarrow \instr{\wif{b}{(S; \wwhile{b}{S})}{skip}}{s}
+                        \\&\quad\ \ \Rightarrow \instr{S; \wwhile{b}{S}}{s}
+                    \end{align*}
+                    \begin{itemize}
+                        \item $(\implies)$ \vspace{0.2cm} \\
+                            By induction on the length $k$ of the derivation \\ $\instr{S; \wif{\neg b}{skip}{S_{we}}}{s} \Rightarrow^k s'$
+                            \begin{itemize}
+                                \item base case $k=0$ \\
+                                    $\instr{S; \wif{\neg b}{skip}{S_{we}}}{s} \Rightarrow^0 s'$ is trivially false, so the implication is true.
+                                \item inductive case $k+1$ \vspace*{-0.3cm}
+                                    \[ \instr{S; \wif{\neg b}{skip}{S_{we}}}{s} \Rightarrow^{k+1} s' \]
+                                    By the decomposition lemma $\exists k_1, k_2 \in \mathbb{N}, s'' \in \texttt{State} :$
+                                    \begin{gather*}
+                                        k_1 + k_2 = k + 1 \qquad\qquad\qquad \instr{S}{s} \Rightarrow^{k_1} s'' \\
+                                        \instr{\wif{\neg b}{skip}{S_{we}}}{s''} \Rightarrow^{k_2} s'
+                                    \end{gather*}
+                                    Thus, by the composition lemma:
+                                    \begin{align*}
+                                        &\instr{S; \wwhile{b}{S}}{s}
+                                        \\&\qquad\Rightarrow^* \instr{\wwhile{b}{S}}{s''}
+                                        \\&\qquad\Rightarrow \instr{\wif{b}{(S; \wwhile{b}{S})}{skip}}{s''}
+                                    \end{align*}
+                                    We distinguish two cases:
+                                    \begin{itemize}
+                                        \item $\Bool{b} s'' = \text{ff}$
+                                            \begin{align*}
+                                                &\instr{\wif{\neg b}{skip}{S_{we}}}{s''}
+                                                \\&\qquad\Rightarrow \instr{skip}{s''}
+                                                \\&\qquad\Rightarrow s''
+                                                \\
+                                                &\instr{\wif{b}{(S; \wwhile{b}{S})}{skip}}{s''}
+                                                \\&\qquad\Rightarrow \instr{skip}{s''}
+                                                \\&\qquad\Rightarrow s''
+                                            \end{align*}
+                                        \item $\Bool{b} s'' = \text{tt}$
+                                        \begin{align*}
+                                            &\instr{\wif{\neg b}{skip}{S_{we}}}{s''}
+                                            \\&\qquad\Rightarrow \instr{S_{we}}{s''}
+                                            \\&\qquad\Rightarrow \instr{\wif{b}{(S; \wif{\neg b}{skip}{S_{we}})}{skip}}{s''}
+                                            \\&\qquad\Rightarrow \instr{S; \wif{\neg b}{skip}{S_{we}}}{s''}
+                                            \\&\qquad\Rightarrow^{k_2 - 3} s'
+                                            \\
+                                            &\instr{\wif{b}{(S; \wwhile{b}{S})}{skip}}{s''}
+                                            \\&\qquad\Rightarrow \instr{S; \wwhile{b}{S}}{s''}
+                                        \end{align*}
+                                        Since $\instr{S; \wif{\neg b}{skip}{S_{we}}}{s''} \Rightarrow^{k_2 - 3} s'$ and $k_2 - 3 = k - k_1 - 2 \leq k$ the inductive hypothesis holds and thus $\instr{S; \wwhile{b}{S}}{s''} \Rightarrow^* s'$
+                                    \end{itemize}
+                            \end{itemize}
+                        \item $(\impliedby)$ \vspace{0.2cm} \\
+                            By induction on the length $k$ of the derivation $\instr{S; \wwhile{b}{S}}{s} \Rightarrow^k s'$
+                            \begin{itemize}
+                                \item base case $k=0$
+                                    $\instr{S; \wwhile{b}{S}}{s} \Rightarrow^0 s'$ is trivially false, so the implication is true.
+                                \item inductive case $k+1$ \vspace*{-0.3cm}
+                                    \[ \instr{S; \wwhile{b}{S}}{s} \Rightarrow^{k+1} s' \]
+                                    By the decomposition lemma $\exists k_1, k_2 \in \mathbb{N}, s'' \in \texttt{State} :$
+                                    \begin{gather*}
+                                        k_1 + k_2 = k + 1 \qquad\qquad\qquad \instr{S}{s} \Rightarrow^{k_1} s'' \\
+                                        \instr{\wwhile{b}{S}}{s''} \Rightarrow^{k_2} s'
+                                    \end{gather*}
+                                    Thus, by the composition lemma:
+                                    \begin{align*}
+                                        &\instr{S; \wif{\neg b}{skip}{S_{we}}}{s}
+                                        \\&\qquad\Rightarrow^* \instr{\wif{\neg b}{skip}{S_{we}}}{s''}
+                                    \end{align*}
+                                    We distinguish two cases:
+                                    \begin{itemize}
+                                        \item $\Bool{b} s'' = \text{ff}$
+                                            \begin{align*}
+                                                &\instr{\wwhile{b}{S}}{s''}
+                                                \\&\qquad\Rightarrow \instr{\wif{b}{(S; \wwhile{b}{S})}{skip}}{s''}
+                                                \\&\qquad\Rightarrow \instr{skip}{s''}
+                                                \\&\qquad\Rightarrow s''
+                                                \\
+                                                &\instr{\wif{\neg b}{skip}{S_{we}}}{s''}
+                                                \\&\qquad\Rightarrow \instr{skip}{s''}
+                                                \\&\qquad\Rightarrow s''
+                                            \end{align*}
+                                        \item $\Bool{b} s'' = \text{tt}$
+                                            \begin{align*}
+                                                &\instr{\wwhile{b}{S}}{s''}
+                                                \\&\qquad\Rightarrow \instr{\wif{b}{(S; \wwhile{b}{S})}{skip}}{s''}
+                                                \\&\qquad\Rightarrow \instr{S; \wwhile{b}{S}}{s''}
+                                                \\&\qquad\Rightarrow^{k_2-2} s'
+                                                \\
+                                                &\instr{\wif{\neg b}{skip}{S_{we}}}{s''}
+                                                \\&\qquad\Rightarrow \instr{S_{we}}{s''}
+                                                \\&\qquad\Rightarrow \instr{\wif{b}{(S; \wif{\neg b}{skip}{S_{we}})}{skip}}{s''}
+                                                \\&\qquad\Rightarrow \instr{S; \wif{\neg b}{skip}{S_{we}}}{s''}
+                                            \end{align*}
+                                            Since $\instr{S; \wwhile{b}{S}}{s''} \Rightarrow^{k_2 - 2} s'$ and $k_2 - 2 = k - k_1 - 1 \leq k$ the inductive hypothesis holds and thus $\instr{S; \wif{\neg b}{skip}{S_{we}}}{s''} \Rightarrow^* s'$
+                                    \end{itemize}
+                            \end{itemize}
+                    \end{itemize}
+            \end{itemize}
+    \end{enumerate}
 \end{exercise}
