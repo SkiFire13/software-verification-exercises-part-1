@@ -37,7 +37,7 @@
                         \\&\qquad \Rightarrow \instr{\wrepeat{S}{b}}{s''}
                         \\&\qquad \Rightarrow^{k_2 - 1} s'
                     \end{align*}
-                    Since $k_2 - 1 = k - k_1 - 1 \leq k$, by inductive hypothesis we have $\Bool{b} s' = \text{tt}$
+                    Since $\instr{\wrepeat{S}{b}}{s''} \Rightarrow^{k_2 - 1} s'$ and $k_2 - 1 = k - k_1 - 1 \leq k$ the inductive hypothesis holds and thus $\Bool{b} s' = \text{tt}$
             \end{itemize}
     \end{itemize}
 \end{exercise}
