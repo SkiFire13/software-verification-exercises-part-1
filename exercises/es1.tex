@@ -1,7 +1,7 @@
 \begin{exercise}{
     Prove that if $\instr{\wrepeat{S}{b}}{s} \Rightarrow^* s'$ then $\Bool{b} s' = \text{tt}$
 }
-    We want to prove $\forall S \in \texttt{While}, b \in \texttt{Bexp}, s, s' \in \texttt{State}$
+    We want to prove $\forall S \in \texttt{Stm}, b \in \texttt{Bexp}, s, s' \in \texttt{State}$
     \[ \instr{\wrepeat{S}{b}}{s} \Rightarrow^* s' \implies \Bool{b} s' = \text{tt} \]
     By induction on the lenght $k$ of the derivation $\instr{\texttt{repeat } S \texttt{ until } b}{s} \Rightarrow^k s'$:
     \begin{itemize}

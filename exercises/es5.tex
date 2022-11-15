@@ -2,7 +2,7 @@
     Prove or disprove the following semantic equivalence:
     \[ \wwhile{b}{S} \cong_{\text{\tiny SOS}} \wwhile{b}{(\wwhile{b}{S})}  \]\vspace*{-0.6cm}
 }
-    We want to prove $\forall S \in \texttt{While}, b \in \texttt{Bexp}, s, s' \in \texttt{State}$
+    We want to prove $\forall S \in \texttt{Stm}, b \in \texttt{Bexp}, s, s' \in \texttt{State}$
     \begin{gather*}
         \instr{\wwhile{b}{S}}{s} \Rightarrow^* s' \\
         \iff \\
