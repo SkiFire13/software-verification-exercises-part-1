@@ -1,6 +1,6 @@
 \begin{exercise}{
     Prove or disprove the following semantic equivalence:
-    \[ \wwhile{b}{S} \cong_{\text{\tiny SOS}} \wwhile{b}{(\wrepeat{S}{\neg b})}  \]
+    \[ \wwhile{b}{S}\ \cong_{\text{\tiny SOS}}\ \wwhile{b}{(\wrepeat{S}{\neg b})}  \]
 }
     We want to prove $\forall S \in \texttt{Stm}, b \in \texttt{Bexp}, s, s' \in \texttt{State}$
     \begin{gather*}
@@ -51,7 +51,7 @@
                                 &\instr{S_r; \wwhile{b}{S_r}}{s}
                                 \\&\qquad\Rightarrow \instr{(S;\wif{\neg b}{skip}{S_r}); \wwhile{b}{S_r}}{s}
                             \end{align*}
-                            We proved in class $\forall S_1, S_2, S_3 \in \texttt{Stm}$ $(S_1;S_2);S_3 \cong_{\text{\tiny SOS}} S_1;(S_2;S_3)$, so:
+                            We proved in class $\forall S_1, S_2, S_3 \in \texttt{Stm}$ $(S_1;S_2);S_3\ \cong_{\text{\tiny SOS}}\ S_1;(S_2;S_3)$, so:
                             \begin{gather*}
                                 \instr{(S;\wif{\neg b}{skip}{S_r}); \wwhile{b}{S_r}}{s} \Rightarrow^* s'
                                 \\
