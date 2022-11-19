@@ -14,10 +14,10 @@
             We want to prove $F (\FIX G) \sqsubseteq \FIX G$, then:
             \begin{gather*}
                 F (\FIX G) \sqsubseteq \FIX G = G(\FIX G) \\
-                \begin{align*}
+                \begin{aligned}
                     F (\FIX G) &= \cond{\Bool{b}}{\FIX G \circ \Sds{S}}{\id} \\
                     G (\FIX G) &= \cond{\Bool{b}}{\FIX G \circ \cond{\Bool{b}}{\Sds{S}}{\FIX F}}{\id}
-                \end{align*}
+                \end{aligned}
             \end{gather*}
             We distinguish two cases:
             \begin{itemize}
@@ -37,10 +37,10 @@
             We want to prove $G (\FIX F) \sqsubseteq \FIX F$, then:
             \begin{gather*}
                 G (\FIX F) \sqsubseteq \FIX F = F(\FIX F) \\
-                \begin{align*}
+                \begin{aligned}
                     G (\FIX F) &= \cond{\Bool{b}}{\FIX F \circ \cond{\Bool{b}}{\Sds{S}}{\FIX F}}{\id} \\
                     F (\FIX F) &= \cond{\Bool{b}}{\FIX F \circ \Sds{S}}{\id}
-                \end{align*}
+                \end{aligned}
             \end{gather*}
             We distinguish two cases:
             \begin{itemize}
