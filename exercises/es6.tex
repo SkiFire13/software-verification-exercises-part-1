@@ -38,7 +38,7 @@
                                 \\&\qquad\Rightarrow \instr{S; \wwhile{b}{S}}{s}
                                 \\&\qquad\Rightarrow^{k-1} s'
                             \end{align*}
-                            By the decomposition lemma $\exists k_1, k_2 \in \mathbb{N}, s'' \in \texttt{State} :$
+                            By the decomposition lemma $\exists k_1, k_2 \in \N, s'' \in \texttt{State} :$
                             \begin{gather*}
                                 k_1 + k_2 = k - 1 \qquad\qquad\qquad \instr{S}{s} \Rightarrow^{k_1} s'' \\
                                 \instr{\wwhile{b}{S}}{s''} \Rightarrow^{k_2} s'
@@ -86,7 +86,7 @@
                                         \\&\qquad\Rightarrow \instr{S; \wwhile{b}{S}}{s''}
                                         \\&\qquad\Rightarrow^{k_2 - 2} s'
                                     \end{align*}
-                                    By the decomposition lemma $\exists k_3, k_4 \in \mathbb{N}, s''' \in \texttt{State} :$
+                                    By the decomposition lemma $\exists k_3, k_4 \in \N, s''' \in \texttt{State} :$
                                     \begin{gather*}
                                         k_3 + k_4 = k_2 - 2 \qquad\qquad\qquad \instr{S}{s''} \Rightarrow^{k_3} s''' \\
                                         \instr{\wwhile{b}{S}}{s'''} \Rightarrow^{k_4} s'
@@ -129,7 +129,7 @@
                                 \\&\qquad\Rightarrow \instr{(S;\wif{b}{S}{skip});S_s}{s}
                                 \\&\qquad\Rightarrow^{k - 1} s'
                             \end{align*}
-                            By the decomposition lemma $\exists k_1, k_2 \in \mathbb{N}, s'' \in \texttt{State} :$
+                            By the decomposition lemma $\exists k_1, k_2 \in \N, s'' \in \texttt{State} :$
                             \begin{gather*}
                                 k_1 + k_2 = k + 1 \qquad\qquad\qquad \instr{S;\wif{b}{S}{skip}}{s} \Rightarrow^{k_1} s'' \\
                                 \instr{S_s}{s''} \Rightarrow^{k_2} s'
