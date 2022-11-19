@@ -87,7 +87,7 @@
                                             &\instr{\wif{b}{(S; \wwhile{b}{S})}{skip}}{s''}
                                             \\&\qquad\Rightarrow \instr{S; \wwhile{b}{S}}{s''}
                                         \end{align*}
-                                        Since $\instr{S; \wif{\neg b}{skip}{S_{we}}}{s''} \Rightarrow^{k_2 - 3} s'$ and $k_2 - 3 = k - k_1 - 2 \leq k$ the inductive hypothesis holds and thus $\instr{S; \wwhile{b}{S}}{s''} \Rightarrow^* s'$
+                                        Since $\instr{S; \wif{\neg b}{skip}{S_{we}}}{s''} \Rightarrow^{k_2 - 3} s'$ and $k_2 - 3 = k - k_1 - 2 \leq k$ the inductive hypothesis holds and thus \\ $\instr{S; \wwhile{b}{S}}{s''} \Rightarrow^* s'$
                                     \end{itemize}
                             \end{itemize}
                         \item $(\impliedby)$ \vspace{0.2cm} \\
