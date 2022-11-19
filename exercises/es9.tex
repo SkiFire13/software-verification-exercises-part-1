@@ -1,0 +1,60 @@
+\begin{exercise}{
+    Prove or disprove the following semantic equivalence:
+    \[ \wwhile{b}{S} \cong_{ds} \wwhile{b}{(\wif{b}{S}{(\wwhile{b}{S})})} \]
+}
+    We want to prove:
+    \[ \Sds{\wwhile{b}{S}} = \Sds{\wwhile{b}{(\wif{b}{S}{(\wwhile{b}{S})})}} \]
+    That is, $\FIX F = \FIX G$ where:
+    \begin{align*}
+        F\ g &= \cond{\Bool{b}}{g \circ \Sds{S}}{\id} \\
+        G\ g &= \cond{\Bool{b}}{g \circ (\cond{\Bool{b}}{\Sds{S}}{\FIX F})}{id}
+    \end{align*}
+    \begin{itemize}
+        \item $\FIX F \sqsubseteq \FIX G$ \\
+            We want to prove $F (\FIX G) \sqsubseteq \FIX G$, then:
+            \begin{gather*}
+                F (\FIX G) \sqsubseteq \FIX G = G(\FIX G) \\
+                \begin{align*}
+                    F (\FIX G) &= \cond{\Bool{b}}{\FIX G \circ \Sds{S}}{\id} \\
+                    G (\FIX G) &= \cond{\Bool{b}}{\FIX G \circ \cond{\Bool{b}}{\Sds{S}}{\FIX F}}{\id}
+                \end{align*}
+            \end{gather*}
+            We distinguish two cases:
+            \begin{itemize}
+                \item $\Bool{b} s = \text{ff}$
+                    \begin{align*}
+                        F (\FIX G)\ s = \id s = s \\
+                        G (\FIX G)\ s = \id s = s
+                    \end{align*}
+                \item $\Bool{b} s = \text{tt}$
+                    \begin{align*}
+                        F (\FIX G)\ s &= (\FIX G \circ \Sds{S})\ s \\
+                        G (\FIX G)\ s &= (\FIX G \circ \cond{\Bool{b}}{\Sds{S}}{\FIX F})\ s = (\FIX G \circ \Sds{S})\ s
+                    \end{align*}
+            \end{itemize}
+            Thus by the fixpoint induction lemma $\FIX F \sqsubseteq \FIX G$
+        \item $\FIX F \sqsupseteq \FIX G$ \\
+            We want to prove $G (\FIX F) \sqsubseteq \FIX F$, then:
+            \begin{gather*}
+                G (\FIX F) \sqsubseteq \FIX F = F(\FIX F) \\
+                \begin{align*}
+                    G (\FIX F) &= \cond{\Bool{b}}{\FIX F \circ \cond{\Bool{b}}{\Sds{S}}{\FIX F}}{\id} \\
+                    F (\FIX F) &= \cond{\Bool{b}}{\FIX F \circ \Sds{S}}{\id}
+                \end{align*}
+            \end{gather*}
+            We distinguish two cases:
+            \begin{itemize}
+                \item $\Bool{b} s = \text{ff}$
+                    \begin{align*}
+                        G (\FIX F)\ s = \id s = s \\
+                        F (\FIX F)\ s = \id s = s
+                    \end{align*}
+                \item $\Bool{b} s = \text{tt}$
+                    \begin{align*}
+                        G (\FIX F)\ s &= (\FIX F \circ \cond{\Bool{b}}{\Sds{S}}{\FIX F})\ s = (\FIX F \circ \Sds{S})\ s \\
+                        F (\FIX F)\ s &= (\FIX F \circ \Sds{S})\ s
+                    \end{align*}
+            \end{itemize}
+            Thus by the fixpoint induction lemma $\FIX G \sqsubseteq \FIX F$
+    \end{itemize}
+\end{exercise}
