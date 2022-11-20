@@ -1,7 +1,7 @@
 \begin{exercise}{
     Prove that if $\Sds{\wwhile{b}{S}} s = s'$ then $\Bool{b} s' = \False$
 }
-    Recall that $\Sds{\wwhile{b}{S}} = \FIX F$ where 
+    Recall that $\Sds{\wwhile{b}{S}} = \FIX F$ where
     \[ F\ g= \cond{\Bool{b}}{g \circ \Sds{S}}{\id} \]
     Then consider the following function:
     \[
