@@ -131,14 +131,15 @@
                             \end{align*}
                             By the decomposition lemma $\exists k_1, k_2 \in \N, s'' \in \State$ such that:
                             \begin{gather*}
-                                k_1 + k_2 = k + 1 \qquad\qquad\qquad \instr{S;\wif{b}{S}{skip}}{s} \Rightarrow^{k_1} s'' \\
-                                \instr{S_s}{s''} \Rightarrow^{k_2} s'
+                                k_1 + k_2 = k + 1 \qquad\qquad\qquad \instr{S_s}{s''} \Rightarrow^{k_2} s' \\
+                                \instr{S;\wif{b}{S}{skip}}{s} \Rightarrow^{k_1} s''
                             \end{gather*}
                             Then, by the decomposition lemma $\exists s''' \in \State$ such that:
-                            \begin{gather*}
-                                \instr{S}{s} \Rightarrow^* s''' \\
+                            \[
+                                \instr{S}{s} \Rightarrow^* s'''
+                                \qquad\quad
                                 \instr{\wif{b}{S}{skip}}{s'''} \Rightarrow^* s''
-                            \end{gather*}
+                            \]
                             Then, by the composition lemma:
                             \begin{align*}
                                 &\instr{\wwhile{b}{S}}{s}
@@ -165,11 +166,11 @@
                                         \\&\qquad\Rightarrow s'''
                                     \end{align*}
                                 \item $\Bool{b} s''' = \True$
-                                    \begin{align*}
-                                        &\instr{\wif{b}{S}{skip}}{s'''}
-                                        \\&\qquad\Rightarrow \instr{S}{s'''}
-                                        \\&\qquad\Rightarrow^* s''
-                                    \end{align*}
+                                    \[
+                                        \instr{\wif{b}{S}{skip}}{s'''}
+                                        \Rightarrow \instr{S}{s'''}
+                                        \Rightarrow^* s''
+                                    \]
                                     Thus, by the composition lemma:
                                     \begin{align*}
                                         &\instr{\wif{b}{(S; \wwhile{b}{S})}{skip}}{s'''}
