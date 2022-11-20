@@ -1,13 +1,13 @@
 \begin{exercise}{
     Let $\poset{P}{\leq}$ a poset with bottom $\bot$. A subset $S \subseteq P$ is \textit{down-closed} if
-    \[ \forall x \in S. \forall y \in P. (y \leq x \implies y \in S) \]
+    \[ \forall x \in S.\ \forall y \in P.\ (y \leq x \implies y \in S) \]
     Observe, in particular, that $\varnothing$ is down-closed. \\
     Let us define $dc(P) = \left\{S \in P \mid S \text{ is down-closed}\right\}$.
     \begin{enumerate}
         \item[\textbf{A.}] Prove that $\poset{dc(P)}{\subseteq}$ is a CPO.
     \end{enumerate}
     Consider now the powerset CPO $\poset{\wp(P)}{\subseteq}$ and the function $f : \wp(P) \to dc(P)$ defined as follows:
-    \[ f(X) = \left\{ p \in P \mid \exists x \in X . p \leq x \right\} \]
+    \[ f(X) = \left\{ p \in P \mid \exists x \in X.\ p \leq x \right\} \]
     \begin{enumerate}
         \item[\textbf{B.}] Prove that $f$ is well defined, i.e., for any $X \in \wp(P), f(X) \in dc(P)$.
         \item[\textbf{C.}] Prove that $f$ is continuous.
@@ -18,27 +18,27 @@
             Given a chain $S \subseteq dp(P)$ we can show that the least upper bounds exists and is $\cup S$.
             \begin{itemize}
                 \item $\cup S \in dp(P)$
-                    If $x \in S$ then $\exists S_i \in S : x \in S_i$. Since $S \subseteq dp(P)$ then $S_i \in dp(P)$ and thus
-                    \[ \forall x \in S_i. \forall y \in P. y \leq x \implies y \in S_i \]
+                    If $x \in S$ then $\exists S_i \in S.\ x \in S_i$. Since $S \subseteq dp(P)$ then $S_i \in dp(P)$ and thus
+                    \[ \forall x \in S_i.\ \forall y \in P.\ y \leq x \implies y \in S_i \]
                     Since $x \in S_i$ and $y \in S_i \implies y \in \cup S$ we have:
-                    \[ \forall x \in S. \forall y \in P. y \leq x \implies y \in \cup S \]
+                    \[ \forall x \in S.\ \forall y \in P.\ y \leq x \implies y \in \cup S \]
                     And thus $\cup S \in dp(P)$
                 \item $\cup S$ is an upper bound of $S$ \\
                     By definition $S_i \in S \implies S_i \subseteq \cup S$ thus $\cup S$ is an upper bound of $S$
                 \item $\cup S$ is the least upper bound of $S$ \\
-                    Let $T$ be an upper bound of $S$, thus $\forall S_i \in S. T \subseteq S_i$
-                    \[ \forall x \in \cup S. \exists S_i : x \in S_i \implies x \in T \implies \cup S \subseteq T \]
+                    Let $T$ be an upper bound of $S$, thus $\forall S_i \in S.\ T \subseteq S_i$
+                    \[ \forall x \in \cup S.\ \exists S_i.\ x \in S_i \implies x \in T \implies \cup S \subseteq T \]
                     Thus $\cup S$ is the least upper bound of $S$.
             \end{itemize}
         \item[\textbf{B.}]
-            Given $x \in f(X)$ and $y \in P$ we have $y \leq x$ and we want to show $y \in f(X)$. Since $x \in f(X)$ then $\exists z \in X. x \leq z$, then $y \leq x \leq z$ and thus $\exists z \in X. y \leq z$. So $y \in f(X)$ and $f$ is well defined.
+            Given $x \in f(X)$ and $y \in P$ we have $y \leq x$ and we want to show $y \in f(X)$. Since $x \in f(X)$ then $\exists z \in X.\ x \leq z$, then $y \leq x \leq z$ and thus $\exists z \in X.\ y \leq z$. So $y \in f(X)$ and $f$ is well defined.
         \item[\textbf{C.}]
-            We want to show that $\forall Y \subseteq \wp(P). \cup \left\{f(X) \mid X \in Y\right\} = f(\cup Y)$. Given $Y \subseteq \wp(P)$:
+            We want to show that $\forall Y \subseteq \wp(P).\ \cup \left\{f(X) \mid X \in Y\right\} = f(\cup Y)$. Given $Y \subseteq \wp(P)$:
             \begin{align*}
                 &x \in \cup \left\{f(X) \mid X \in Y\right\} \\
-                \iff& \exists X \in Y. x \in f(X) \\
-                \iff& \exists X \in Y. \exists z \in X. x \leq z \\
-                \iff& \exists z \in Y. x \leq z \\
+                \iff& \exists X \in Y.\ x \in f(X) \\
+                \iff& \exists X \in Y.\ \exists z \in X.\ x \leq z \\
+                \iff& \exists z \in Y.\ x \leq z \\
                 \iff& x \in f(\cup Y)
             \end{align*}
             Thus $\cup \left\{f(X) \mid X \in Y\right\} = f(\cup Y)$

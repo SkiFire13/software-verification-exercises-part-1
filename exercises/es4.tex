@@ -53,7 +53,7 @@
                                     $\instr{S; \wif{\neg b}{skip}{S_{we}}}{s} \Rightarrow^0 s'$ is trivially false, so the implication is true.
                                 \item inductive case $k+1$ \vspace*{-0.3cm}
                                     \[ \instr{S; \wif{\neg b}{skip}{S_{we}}}{s} \Rightarrow^{k+1} s' \]
-                                    By the decomposition lemma $\exists k_1, k_2 \in \N, s'' \in \State :$
+                                    By the decomposition lemma $\exists k_1, k_2 \in \N, s'' \in \State$ such that:
                                     \begin{gather*}
                                         k_1 + k_2 = k + 1 \qquad\qquad\qquad \instr{S}{s} \Rightarrow^{k_1} s'' \\
                                         \instr{\wif{\neg b}{skip}{S_{we}}}{s''} \Rightarrow^{k_2} s'
@@ -97,7 +97,7 @@
                                     $\instr{S; \wwhile{b}{S}}{s} \Rightarrow^0 s'$ is trivially false, so the implication is true.
                                 \item inductive case $k+1$ \vspace*{-0.3cm}
                                     \[ \instr{S; \wwhile{b}{S}}{s} \Rightarrow^{k+1} s' \]
-                                    By the decomposition lemma $\exists k_1, k_2 \in \N, s'' \in \State :$
+                                    By the decomposition lemma $\exists k_1, k_2 \in \N, s'' \in \State$ such that:
                                     \begin{gather*}
                                         k_1 + k_2 = k + 1 \qquad\qquad\qquad \instr{S}{s} \Rightarrow^{k_1} s'' \\
                                         \instr{\wwhile{b}{S}}{s''} \Rightarrow^{k_2} s'

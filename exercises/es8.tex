@@ -5,7 +5,7 @@
     We want to prove $\Sds{\wwhile{b}{S}} = \Sds{(\wwhile{b}{S});(\wwhile{b}{S})}$, that is $\FIX F = \FIX F \circ \FIX F$ where $F\ g = \cond{\Bool{b}}{g \circ \Sds{S}}{\id}$
     \begin{itemize}
         \item $\FIX F \sqsubseteq \FIX F \circ \FIX F$
-            \[ \forall s, s' \in \State\ (\FIX F)\ s = s' \implies (\FIX F \circ \FIX F)\ s = s' \]
+            \[ \forall s, s' \in \State.\ (\FIX F)\ s = s' \implies (\FIX F \circ \FIX F)\ s = s' \]
             By the termination lemma (see exercise 7) we have $\Bool{b} s' = \False$.
             \begin{align*}
                 (\FIX F \circ \FIX F)\ s &= (\FIX F)\ s' = F(\FIX F)\ s = \\
@@ -13,7 +13,7 @@
                 &= \id s' = s'
             \end{align*}
         \item $\FIX F \sqsupseteq \FIX F \circ \FIX F$
-            \[ \forall s, s' \in \State\ (\FIX F \circ \FIX F)\ s = s' \implies (\FIX F)\ s = s' \]
+            \[ \forall s, s' \in \State.\ (\FIX F \circ \FIX F)\ s = s' \implies (\FIX F)\ s = s' \]
             By the definition of function composition:
             \[
                 (\FIX F \circ \FIX F)\ s = \begin{cases}

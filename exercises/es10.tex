@@ -18,9 +18,9 @@
         \end{cases}
     \]
     We prove that $G d \sqsubseteq d$, that is:
-    \[ \forall s, s' \in \State\ (G\ d)\ s = s' \implies d\ s = s' \]
+    \[ \forall s, s' \in \State.\ (G\ d)\ s = s' \implies d\ s = s' \]
     \[ (G\ d)\ s = (\cond{\Bool{b}}{\id}{d} \circ \Sds{S})\ s = s' \]
-    By the definition of function composition $\exists s'' \in \State :$ $\Sds{S}\ s = s'' \neq \undef,$ $\cond{\Bool{b}}{\id}{d} s'' = s'$
+    By the definition of function composition $\exists s'' \in \State.\ \Sds{S}\ s = s'' \neq \undef,$ \\ $\cond{\Bool{b}}{\id}{d} s'' = s'$
     We distinguish two cases:
     \begin{itemize}
         \item $\Bool{b} s'' = \True$
@@ -41,14 +41,14 @@
             \end{itemize}
     \end{itemize}
     Thus by the fixpoint induction lemma we have $\FIX G \sqsubseteq d$. which means that:
-    \[ \forall s, s' \in \State\ (\FIX G)\ s = s' \implies d\ s = s' \]
-    Assume by contradiction that $\exists s, s' \in \State : (\FIX G)\ s = s', \Bool{b} s' = \False $. Then $d\ s = \undef \neq s'$, which means $\FIX G \not\sqsubseteq d$, and that's a contradiction. Thus $(\FIX G)\ s = s' \implies \Bool{b} s' = \True$ \\
+    \[ \forall s, s' \in \State.\ (\FIX G)\ s = s' \implies d\ s = s' \]
+    Assume by contradiction that $\exists s, s' \in \State.\ (\FIX G)\ s = s', \Bool{b} s' = \False $. Then $d\ s = \undef \neq s'$, which means $\FIX G \not\sqsubseteq d$, and that's a contradiction. Thus $(\FIX G)\ s = s' \implies \Bool{b} s' = \True$ \\
     Now we can finally prove $\FIX F = \FIX G$, that is:
-    \[ \forall s, s' \in \State\ (\FIX F)\ s = s' \iff (\FIX G)\ s = s' \]
+    \[ \forall s, s' \in \State.\ (\FIX F)\ s = s' \iff (\FIX G)\ s = s' \]
     \begin{itemize}
         \item $(\implies)$
             \[ \FIX F = F(\FIX F) = \cond{\Bool{b}}{\id}{\FIX F} \circ \FIX G \]
-            By the definition of composition $\exists s'' \in \State :$ $(\FIX G)\ s = s'' \neq \undef,$ \\ $\cond{\Bool{b}}{\id}{\FIX F}\ s'' = s'$ \\
+            By the definition of composition $\exists s'' \in \State.\ (\FIX G)\ s = s'' \neq \undef,$ \\ $\cond{\Bool{b}}{\id}{\FIX F}\ s'' = s'$ \\
             By the termination lemma we just proved we get $\Bool{b}\ s'' = \True$, then:
             \[ \cond{\Bool{b}}{\id}{\FIX F}\ s'' = \id s'' = s'' = s' \]
             And so $(\FIX G)\ s = s'' = s' = (\FIX F)\ s$
