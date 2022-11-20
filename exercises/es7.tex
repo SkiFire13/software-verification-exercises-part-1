@@ -25,7 +25,7 @@
             \begin{gather*}
                 (d \circ \Sds{S})\ s = d\ s'' \\
                 \begin{aligned}
-                    (\FIX F)\ s &= F(\FIX F)\ s = \cond{\Bool{b}}{\FIX F \circ \Sds{S}}{\id} \\
+                    (\FIX F)\ s &= F(\FIX F)\ s = \cond{\Bool{b}}{\FIX F \circ \Sds{S}}{\id}\ s \\
                     &= (\FIX F \circ \Sds{S})\ s = (\FIX F)\ s''
                 \end{aligned}
             \end{gather*}
