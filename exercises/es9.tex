@@ -9,52 +9,20 @@
         F\ g &= \cond{\Bool{b}}{g \circ \Sds{S}}{\id} \\
         G\ g &= \cond{\Bool{b}}{g \circ (\cond{\Bool{b}}{\Sds{S}}{\FIX F})}{id}
     \end{align*}
+    We prove that $F = G$, that is:
+    \[ \forall s \in \texttt{State}, g \in \texttt{State} \to \texttt{State} \ F\ g\ s = G\ g\ s \]
+    We distinguish two cases:
     \begin{itemize}
-        \item $\FIX F \sqsubseteq \FIX G$ \\
-            We want to prove $F (\FIX G) \sqsubseteq \FIX G$, then:
-            \begin{gather*}
-                F (\FIX G) \sqsubseteq \FIX G = G(\FIX G) \\
-                \begin{aligned}
-                    F (\FIX G) &= \cond{\Bool{b}}{\FIX G \circ \Sds{S}}{\id} \\
-                    G (\FIX G) &= \cond{\Bool{b}}{\FIX G \circ \cond{\Bool{b}}{\Sds{S}}{\FIX F}}{\id}
-                \end{aligned}
-            \end{gather*}
-            We distinguish two cases:
-            \begin{itemize}
-                \item $\Bool{b} s = \text{ff}$
-                    \begin{align*}
-                        F (\FIX G)\ s = \id s = s \\
-                        G (\FIX G)\ s = \id s = s
-                    \end{align*}
-                \item $\Bool{b} s = \text{tt}$
-                    \begin{align*}
-                        F (\FIX G)\ s &= (\FIX G \circ \Sds{S})\ s \\
-                        G (\FIX G)\ s &= (\FIX G \circ \cond{\Bool{b}}{\Sds{S}}{\FIX F})\ s = (\FIX G \circ \Sds{S})\ s
-                    \end{align*}
-            \end{itemize}
-            Thus by the fixpoint induction lemma $\FIX F \sqsubseteq \FIX G$
-        \item $\FIX F \sqsupseteq \FIX G$ \\
-            We want to prove $G (\FIX F) \sqsubseteq \FIX F$, then:
-            \begin{gather*}
-                G (\FIX F) \sqsubseteq \FIX F = F(\FIX F) \\
-                \begin{aligned}
-                    G (\FIX F) &= \cond{\Bool{b}}{\FIX F \circ \cond{\Bool{b}}{\Sds{S}}{\FIX F}}{\id} \\
-                    F (\FIX F) &= \cond{\Bool{b}}{\FIX F \circ \Sds{S}}{\id}
-                \end{aligned}
-            \end{gather*}
-            We distinguish two cases:
-            \begin{itemize}
-                \item $\Bool{b} s = \text{ff}$
-                    \begin{align*}
-                        G (\FIX F)\ s = \id s = s \\
-                        F (\FIX F)\ s = \id s = s
-                    \end{align*}
-                \item $\Bool{b} s = \text{tt}$
-                    \begin{align*}
-                        G (\FIX F)\ s &= (\FIX F \circ \cond{\Bool{b}}{\Sds{S}}{\FIX F})\ s = (\FIX F \circ \Sds{S})\ s \\
-                        F (\FIX F)\ s &= (\FIX F \circ \Sds{S})\ s
-                    \end{align*}
-            \end{itemize}
-            Thus by the fixpoint induction lemma $\FIX G \sqsubseteq \FIX F$
+        \item $\Bool{b} s = \text{ff}$
+            \begin{align*}
+                F\ g \ s = \id s = s \\
+                G\ g \ s = \id s = s
+            \end{align*}
+        \item $\Bool{b} s = \text{tt}$
+            \begin{align*}
+                F\ g\ s &= (g \circ \Sds{S})\ s \\
+                G\ g\ s &= (g \circ \cond{\Bool{b}}{\Sds{S}}{\FIX F})\ s = (g \circ \Sds{S})\ s
+            \end{align*}
     \end{itemize}
+    Since $F = G$ then $\FIX F = \FIX G$
 \end{exercise}
