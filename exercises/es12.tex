@@ -1,0 +1,25 @@
+\begin{exercise}{
+    Let $D$ be a CPO and $f: D \to D$ be a function such that $\forall x \in D.\ x \leq f(x)$ holds. Provide an example showing that the least fixpoint of $f$ does not necessarily exist.
+}
+    Let $D = \left\{\bot, a, b\right\}$ and $\leq$ such that $\bot \le a$ and $\bot \le b$ but $a \not\leq b$ and $b \not\leq a$. Considering every subset of $D$:
+    \begin{itemize}
+        \item $\lub(\varnothing) = \bot$;
+        \item $\lub(\left\{\bot\right\}) = \bot$;
+        \item $\lub(\left\{a\right\}) = a$;
+        \item $\lub(\left\{b\right\}) = b$;
+        \item $\lub(\left\{\bot, a\right\}) = a$;
+        \item $\lub(\left\{\bot, b\right\}) = b$;
+        \item $\left\{a, b\right\}$ is not a chain;
+        \item $\left\{\bot, a, b\right\}$ is not a chain.
+    \end{itemize}
+    Since every chain of $D$ has a least upper bound, $D$ is a CPO. \\
+    Let $f : D \to D$ such that:
+    \[
+        f(x) = \begin{cases}
+            a &\quad \text{if } x = \bot \\
+            x &\quad \text{otherwise}
+        \end{cases}
+    \]
+    It's trivially true that $x \leq f(x)$ since $\bot \leq a = f(\bot)$ and $x \leq x = f(x)$ othersie. \\
+    $a$ and $b$ are both fixpoints of $f$ since $f(x) = x$ for $x \neq \bot$, however neither $a \leq b$ or $b \leq a$, so neither of them is the least fixpoint of $f$. Thus the least fixpoint of $f$ doesn't exist.
+\end{exercise}
