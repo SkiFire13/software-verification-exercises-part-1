@@ -5,11 +5,10 @@
     \[ \instr{\wrepeat{S}{b}}{s} \Rightarrow^* s' \implies \Bool{b} s' = \True \]
     By induction on the lenght $k$ of the derivation $\instr{\texttt{repeat } S \texttt{ until } b}{s} \Rightarrow^k s'$:
     \begin{itemize}
-        \item base case $k=0$: we want to prove:
-            \[ \instr{\wrepeat{S}{b}}{s} \Rightarrow^0 s' \implies \Bool{b} s' = \True \]
-            The premise is trivially false, so the whole implication is true;
-        \item inductive case $k+1$: we want to prove:
-            \[ \instr{\wrepeat{S}{b}}{s} \Rightarrow^{k+1} s' \implies \Bool{b} s' = \True \]
+        \item base case $k=0$ \\
+            $\instr{\wrepeat{S}{b}}{s} \Rightarrow^0 s'$ is trivially false, so the implication is true.
+        \item inductive case $k+1$
+            \[ \instr{\wrepeat{S}{b}}{s} \Rightarrow^{k+1} s' \]
             First, we execute a step of the derivation:
             \begin{align*}
                 &\instr{\wrepeat{S}{b}}{s}
