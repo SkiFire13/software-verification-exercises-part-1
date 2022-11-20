@@ -1,6 +1,6 @@
 \begin{exercise}{
     Prove or disprove the following semantic equivalence:
-    \[ \wrepeat{(\wrepeat{S}{b})}{b} \cong_{ds} \wrepeat{S}{b} \]
+    \[ \wrepeat{(\wrepeat{S}{b})}{b} \DScong \wrepeat{S}{b} \]
 }
     We want to prove:
     \[ \Sds{\wrepeat{(\wrepeat{S}{b})}{b}} = \Sds{\wrepeat{S}{b}} \]
@@ -9,26 +9,26 @@
         F\ g &= \cond{\Bool{b}}{\id}{g} \circ \FIX G \\
         G\ g &= \cond{\Bool{b}}{\id}{g} \circ \Sds{S}
     \end{align*}
-    We first prove $(\FIX G)\ s = s' \neq \undef \implies \Bool{b} s' = \text{tt}$, that is the termination lemma for $\wrepeat{S}{b}$.
+    We first prove $(\FIX G)\ s = s' \neq \undef \implies \Bool{b} s' = \True$, that is the termination lemma for $\wrepeat{S}{b}$.
     Consider the following function:
     \[
         d\ s = \begin{cases}
-            \undef &\quad \text{if } (\FIX G)\ s = s' \neq \undef, \Bool{b} s' = \text{ff} \\
+            \undef &\quad \text{if } (\FIX G)\ s = s' \neq \undef, \Bool{b} s' = \False \\
             (\FIX G)\ s &\quad \text{otherwise}
         \end{cases}
     \]
     We prove that $G d \sqsubseteq d$, that is:
-    \[ \forall s, s' \in \texttt{State}\ (G\ d)\ s = s' \implies d\ s = s' \]
+    \[ \forall s, s' \in \State\ (G\ d)\ s = s' \implies d\ s = s' \]
     \[ (G\ d)\ s = \cond{\Bool{b}}{\id}{d} \circ \Sds{S} \]
-    By the definition of function composition $\exists s'' \in \texttt{State} :$ $\Sds{S}\ s = s'' \neq \undef,$ $\cond{\Bool{b}}{\id}{d} s'' = s'$
+    By the definition of function composition $\exists s'' \in \State :$ $\Sds{S}\ s = s'' \neq \undef,$ $\cond{\Bool{b}}{\id}{d} s'' = s'$
     We distinguish two cases:
     \begin{itemize}
-        \item $\Bool{b} s'' = \text{tt}$
+        \item $\Bool{b} s'' = \True$
             \[ (G\ d)\ s = \cond{\Bool{b}}{\id}{d} s'' = \id s'' = s'' = s' \]
-            Thus $\Bool{b} s' = \Bool{b} s'' = \text{tt}$
+            Thus $\Bool{b} s' = \Bool{b} s'' = \True$
             \[ (\FIX G)\ s = G(\FIX G)\ s = (\cond{\Bool{b}}{\id}{\FIX G} \circ \Sds{S})\ s = \id s'' = s'' = s' \]
-            Since $(\FIX G)\ s = s' \neq \undef$ and $\Bool{b} s' \neq \text{ff}$ we have $d\ s = (\FIX G)\ s = s'$
-        \item $\Bool{b} s'' = \text{ff}$
+            Since $(\FIX G)\ s = s' \neq \undef$ and $\Bool{b} s' \neq \False$ we have $d\ s = (\FIX G)\ s = s'$
+        \item $\Bool{b} s'' = \False$
             \[ (G\ d)\ s = \cond{\Bool{b}}{\id}{d} s'' = d\ s'' \]
             \begin{align*}
                 (\FIX G)\ s &= G(\FIX G)\ s = (\cond{\Bool{b}}{\id}{\FIX G} \circ \Sds{S})\ s = \\
@@ -36,24 +36,24 @@
             \end{align*}
             We distinguish two cases:
             \begin{itemize}
-                \item $(\FIX G)\ s = (\FIX G)\ s'' = s''' \neq \undef, \Bool{b} s''' = \text{ff}$, then $(G\ d)\ s = d\ s'' = \undef = d\ s$
+                \item $(\FIX G)\ s = (\FIX G)\ s'' = s''' \neq \undef, \Bool{b} s''' = \False$, then $(G\ d)\ s = d\ s'' = \undef = d\ s$
                 \item otherwise, $(G\ d)\ s = d\ s'' = (\FIX G)\ s'' = (\FIX G)\ s = d\ s$
             \end{itemize}
     \end{itemize}
     Thus by the fixpoint induction lemma we have $\FIX G \sqsubseteq d$. which means that:
-    \[ \forall s, s' \in \texttt{State}\ (\FIX G)\ s = s' \implies d\ s = s' \]
-    Assume by contradiction that $\exists s, s' \in \texttt{State} : (\FIX G)\ s = s', \Bool{b} s' = \text{ff} $. Then $d\ s = \undef \neq s'$, which means $\FIX G \not\sqsubseteq d$, and that's a contradiction. Thus $(\FIX G)\ s = s' \implies \Bool{b} s' = \text{tt}$ \\
+    \[ \forall s, s' \in \State\ (\FIX G)\ s = s' \implies d\ s = s' \]
+    Assume by contradiction that $\exists s, s' \in \State : (\FIX G)\ s = s', \Bool{b} s' = \False $. Then $d\ s = \undef \neq s'$, which means $\FIX G \not\sqsubseteq d$, and that's a contradiction. Thus $(\FIX G)\ s = s' \implies \Bool{b} s' = \True$ \\
     Now we can finally prove $\FIX F = \FIX G$, that is:
-    \[ \forall s, s' \in \texttt{State}\ (\FIX F)\ s = s' \iff (\FIX G)\ s = s' \]
+    \[ \forall s, s' \in \State\ (\FIX F)\ s = s' \iff (\FIX G)\ s = s' \]
     \begin{itemize}
         \item $(\implies)$
             \[ \FIX F = F(\FIX F) = \cond{\Bool{b}}{\id}{\FIX F} \circ \FIX G \]
-            By the definition of composition $\exists s'' \in \texttt{State} :$ $(\FIX G)\ s = s'' \neq \undef,$ \\ $\cond{\Bool{b}}{\id}{\FIX F}\ s'' = s'$ \\
-            By the termination lemma we just proved we get $\Bool{b}\ s'' = \text{tt}$, then:
+            By the definition of composition $\exists s'' \in \State :$ $(\FIX G)\ s = s'' \neq \undef,$ \\ $\cond{\Bool{b}}{\id}{\FIX F}\ s'' = s'$ \\
+            By the termination lemma we just proved we get $\Bool{b}\ s'' = \True$, then:
             \[ \cond{\Bool{b}}{\id}{\FIX F}\ s'' = \id s'' = s'' = s' \]
             And so $(\FIX G)\ s = s'' = s' = (\FIX F)\ s$
         \item $(\impliedby)$ \\
-            By the termination lemma we just proved we get $\Bool{b}\ s = \text{tt}$, then:
+            By the termination lemma we just proved we get $\Bool{b}\ s = \True$, then:
             \begin{align*}
                 (\FIX F)\ s &= F(\FIX F)\ s = (\cond{\Bool{b}}{\id}{\FIX F} \circ \FIX G)\ s = \\
                 &= \cond{\Bool{b}}{\id}{\FIX F}\ s' = \id s' = \\

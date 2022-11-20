@@ -12,15 +12,26 @@
 \noindent \textbf{Exercise~\theexercise.} \rmfamily #1 
 \par\medskip\noindent \textbf{Solution.} \rmfamily}{}
 
+% Math stuff
 \newcommand{\N}{\mathbb{N}}
+% Definitions
 \newcommand{\Bool}[1]{\mathcal{B} \llbracket #1 \rrbracket}
+\newcommand{\Sds}[1]{S_{ds} \llbracket #1 \rrbracket}
+% Terms
+\newcommand{\State}{\texttt{State}}
+\newcommand{\True}{\text{tt}}
+\newcommand{\False}{\text{ff}}
+% Symbols
+\newcommand{\SOScong}{\cong_{\text{\tiny SOS}}}
+\newcommand{\DScong}{\cong_{ds}}
+% Operational instruction
 \newcommand{\instr}[2]{\left<#1, #2\right>}
+% Operational constructs
 \newcommand{\wrepeat}[2]{\texttt{repeat}\ #1\ \texttt{until}\ #2}
 \newcommand{\wwhile}[2]{\texttt{while}\ #1\ \texttt{do}\ #2}
 \newcommand{\wif}[3]{\texttt{if}\ #1\ \texttt{then}\ #2\ \texttt{else}\ #3}
 \newcommand{\wwexitif}[3]{\texttt{while}\ #1\ \texttt{do}\ #2\ \texttt{exitif}\ #3}
-
-\newcommand{\Sds}[1]{S_{ds} \llbracket #1 \rrbracket}
+% Denotational functions
 \newcommand{\FIX}{\operatorname{FIX}}
 \newcommand{\cond}[3]{\operatorname{cond}\left(#1, #2, #3\right)}
 \newcommand{\id}{\operatorname{id}}

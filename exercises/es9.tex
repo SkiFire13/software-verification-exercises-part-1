@@ -1,6 +1,6 @@
 \begin{exercise}{
     Prove or disprove the following semantic equivalence:
-    \[ \wwhile{b}{S} \cong_{ds} \wwhile{b}{(\wif{b}{S}{(\wwhile{b}{S})})} \]
+    \[ \wwhile{b}{S} \DScong \wwhile{b}{(\wif{b}{S}{(\wwhile{b}{S})})} \]
 }
     We want to prove:
     \[ \Sds{\wwhile{b}{S}} = \Sds{\wwhile{b}{(\wif{b}{S}{(\wwhile{b}{S})})}} \]
@@ -10,15 +10,15 @@
         G\ g &= \cond{\Bool{b}}{g \circ (\cond{\Bool{b}}{\Sds{S}}{\FIX F})}{id}
     \end{align*}
     We prove that $F = G$, that is:
-    \[ \forall s \in \texttt{State}, g \in \texttt{State} \to \texttt{State} \ F\ g\ s = G\ g\ s \]
+    \[ \forall s \in \State, g \in \State \to \State \ F\ g\ s = G\ g\ s \]
     We distinguish two cases:
     \begin{itemize}
-        \item $\Bool{b} s = \text{ff}$
+        \item $\Bool{b} s = \False$
             \begin{align*}
                 F\ g \ s = \id s = s \\
                 G\ g \ s = \id s = s
             \end{align*}
-        \item $\Bool{b} s = \text{tt}$
+        \item $\Bool{b} s = \True$
             \begin{align*}
                 F\ g\ s &= (g \circ \Sds{S})\ s \\
                 G\ g\ s &= (g \circ \cond{\Bool{b}}{\Sds{S}}{\FIX F})\ s = (g \circ \Sds{S})\ s

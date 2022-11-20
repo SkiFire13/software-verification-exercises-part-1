@@ -1,27 +1,27 @@
 \begin{exercise}{
-    Prove that if $\Sds{\wwhile{b}{S}} s = s'$ then $\Bool{b} s' = \text{ff}$
+    Prove that if $\Sds{\wwhile{b}{S}} s = s'$ then $\Bool{b} s' = \False$
 }
     Recall that $\Sds{\wwhile{b}{S}} = \FIX F$ where 
     \[ F\ g= \cond{\Bool{b}}{g \circ \Sds{S}}{\id} \]
     Then consider the following function:
     \[
         d\ s = \begin{cases}
-            \undef &\quad \text{if } (\FIX F)\ s = s' \neq \undef, \Bool{b} s' = \text{tt} \\
+            \undef &\quad \text{if } (\FIX F)\ s = s' \neq \undef, \Bool{b} s' = \True \\
             (\FIX F)\ s &\quad \text{otherwise}
         \end{cases}
     \]
     We prove that $F d \sqsubseteq d$, that is:
-    \[ \forall s, s' \in \texttt{State}\ (F\ d)\ s = s' \implies d\ s = s' \]
+    \[ \forall s, s' \in \State\ (F\ d)\ s = s' \implies d\ s = s' \]
     We distinguish two cases:
     \begin{itemize}
-        \item $\Bool{b} s = \text{ff}$
+        \item $\Bool{b} s = \False$
             \[ (F\ d)\ s = \cond{\Bool{b}}{d \circ \Sds{S}}{\id}\ s = \id s = s = s' \]
-            Thus $\Bool{b} s' = \Bool{b} s = \text{ff}$
+            Thus $\Bool{b} s' = \Bool{b} s = \False$
             \[ (\FIX F)\ s = F(\FIX F)\ s = \cond{\Bool{b}}{\FIX F \circ \Sds{S}}{\id}\ s = \id s = s = s' \]
-            Since $(\FIX F)\ s = s \neq \undef$ and $\Bool{b} s \neq \text{tt}$ we have $d\ s = (\FIX F)\ s = s$
-        \item $\Bool{b} s = \text{tt}$
+            Since $(\FIX F)\ s = s \neq \undef$ and $\Bool{b} s \neq \True$ we have $d\ s = (\FIX F)\ s = s$
+        \item $\Bool{b} s = \True$
             \[ (F\ d)\ s = \cond{\Bool{b}}{d \circ \Sds{S}}{\id}\ s = (d \circ \Sds{S})\ s \]
-            By the definition of composition $\exists s'' \in \texttt{State} : \Sds{S}\ s = s'' \neq \undef$
+            By the definition of composition $\exists s'' \in \State : \Sds{S}\ s = s'' \neq \undef$
             \begin{gather*}
                 (d \circ \Sds{S})\ s = d\ s'' \\
                 \begin{aligned}
@@ -31,11 +31,11 @@
             \end{gather*}
             We distinguish two cases:
             \begin{itemize}
-                \item $(\FIX F)\ s = (\FIX F)\ s'' = s''' \neq \undef, \Bool{b} s''' = \text{tt}$, then $d\ s'' = \undef = d\ s$
+                \item $(\FIX F)\ s = (\FIX F)\ s'' = s''' \neq \undef, \Bool{b} s''' = \True$, then $d\ s'' = \undef = d\ s$
                 \item otherwise, $d\ s'' = (\FIX F)\ s'' = (\FIX F)\ s = d\ s$
             \end{itemize}
     \end{itemize}
     Thus by the fixpoint induction lemma we have $\FIX F \sqsubseteq d$. which means that:
-    \[ \forall s, s' \in \texttt{State}\ (\FIX F)\ s = s' \implies d\ s = s' \]
-    Assume by contradiction that $\exists s, s' \in \texttt{State} : (\FIX F)\ s = s', \Bool{b} s' = \text{tt} $. Then $d\ s = \undef \neq s'$, which means $\FIX F \not\sqsubseteq d$, and that's a contradiction. Thus $(\FIX F)\ s = s' \implies \Bool{b} s' = \text{ff}$
+    \[ \forall s, s' \in \State\ (\FIX F)\ s = s' \implies d\ s = s' \]
+    Assume by contradiction that $\exists s, s' \in \State : (\FIX F)\ s = s', \Bool{b} s' = \True $. Then $d\ s = \undef \neq s'$, which means $\FIX F \not\sqsubseteq d$, and that's a contradiction. Thus $(\FIX F)\ s = s' \implies \Bool{b} s' = \False$
 \end{exercise}

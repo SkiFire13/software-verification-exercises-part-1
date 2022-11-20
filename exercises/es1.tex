@@ -1,22 +1,22 @@
 \begin{exercise}{
-    Prove that if $\instr{\wrepeat{S}{b}}{s} \Rightarrow^* s'$ then $\Bool{b} s' = \text{tt}$ \vspace*{0.4cm}
+    Prove that if $\instr{\wrepeat{S}{b}}{s} \Rightarrow^* s'$ then $\Bool{b} s' = \True$ \vspace*{0.4cm}
 }
-    We want to prove $\forall S \in \texttt{Stm}, b \in \texttt{Bexp}, s, s' \in \texttt{State}$
-    \[ \instr{\wrepeat{S}{b}}{s} \Rightarrow^* s' \implies \Bool{b} s' = \text{tt} \]
+    We want to prove $\forall S \in \texttt{Stm}, b \in \texttt{Bexp}, s, s' \in \State$
+    \[ \instr{\wrepeat{S}{b}}{s} \Rightarrow^* s' \implies \Bool{b} s' = \True \]
     By induction on the lenght $k$ of the derivation $\instr{\texttt{repeat } S \texttt{ until } b}{s} \Rightarrow^k s'$:
     \begin{itemize}
         \item base case $k=0$: we want to prove:
-            \[ \instr{\wrepeat{S}{b}}{s} \Rightarrow^0 s' \implies \Bool{b} s' = \text{tt} \]
+            \[ \instr{\wrepeat{S}{b}}{s} \Rightarrow^0 s' \implies \Bool{b} s' = \True \]
             The premise is trivially false, so the whole implication is true;
         \item inductive case $k+1$: we want to prove:
-            \[ \instr{\wrepeat{S}{b}}{s} \Rightarrow^{k+1} s' \implies \Bool{b} s' = \text{tt} \]
+            \[ \instr{\wrepeat{S}{b}}{s} \Rightarrow^{k+1} s' \implies \Bool{b} s' = \True \]
             First, we execute a step of the derivation:
             \begin{align*}
                 &\instr{\wrepeat{S}{b}}{s}
                 \\&\qquad \Rightarrow \instr{S; \wif{b}{skip}{(\wrepeat{S}{b})}}{s}
                 \\&\qquad \Rightarrow^k s'
             \end{align*}
-            By the decomposition lemma $\exists k_1, k_2 \in \N, s'' \in \texttt{State} :$
+            By the decomposition lemma $\exists k_1, k_2 \in \N, s'' \in \State :$
             \begin{gather*}
                 k_1 + k_2 = k \qquad\qquad\qquad\qquad
                 \instr{S}{s} \Rightarrow^{k_1} s'' \\
@@ -24,20 +24,20 @@
             \end{gather*}
             We then distinguish two cases:
             \begin{itemize}
-                \item $\Bool{b} s'' = \text{tt}$
+                \item $\Bool{b} s'' = \True$
                     \begin{align*}
                         &\instr{\wif{b}{skip}{(\wrepeat{S}{b})}}{s''}
                         \\&\qquad \Rightarrow \instr{skip}{s''}
                         \\&\qquad \Rightarrow s'' = s'
                     \end{align*}
-                    Thus $\Bool{b} s' = \Bool{b} s'' = \text{tt}$
-                \item $\Bool{b} s'' = \text{ff}$
+                    Thus $\Bool{b} s' = \Bool{b} s'' = \True$
+                \item $\Bool{b} s'' = \False$
                     \begin{align*}
                         &\instr{\wif{b}{skip}{(\wrepeat{S}{b})}}{s''}
                         \\&\qquad \Rightarrow \instr{\wrepeat{S}{b}}{s''}
                         \\&\qquad \Rightarrow^{k_2 - 1} s'
                     \end{align*}
-                    Since $\instr{\wrepeat{S}{b}}{s''} \Rightarrow^{k_2 - 1} s'$ and $k_2 - 1 = k - k_1 - 1 \leq k$ the inductive hypothesis holds and thus $\Bool{b} s' = \text{tt}$
+                    Since $\instr{\wrepeat{S}{b}}{s''} \Rightarrow^{k_2 - 1} s'$ and $k_2 - 1 = k - k_1 - 1 \leq k$ the inductive hypothesis holds and thus $\Bool{b} s' = \True$
             \end{itemize}
     \end{itemize}
 \end{exercise}

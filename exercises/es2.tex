@@ -1,8 +1,8 @@
 \begin{exercise}{
     Prove or disprove the following semantic equivalence:
-    \[ (\wwhile{b}{S});\ \wif{b}{S}{skip}\ \cong_{\text{\tiny SOS}}\ \wwhile{b}{S} \]
+    \[ (\wwhile{b}{S});\ \wif{b}{S}{skip}\ \SOScong\ \wwhile{b}{S} \]
 }
-    We want to prove $\forall S \in \texttt{Stm}, b \in \texttt{Bexp}, s, s' \in \texttt{State}$
+    We want to prove $\forall S \in \texttt{Stm}, b \in \texttt{Bexp}, s, s' \in \State$
     \begin{gather*}
         \instr{(\wwhile{b}{S});\ \wif{b}{S}{skip}}{s} \Rightarrow^* s' \\
         \iff \\
@@ -12,12 +12,12 @@
         \item $(\implies)$ \vspace{0.2cm} \\
             By the decomposition lemma:\vspace*{-0.3cm}
             \[ \instr{\wwhile{b}{S}}{s} \Rightarrow^* s'' \qquad \instr{\wif{b}{S}{skip}}{s''} \Rightarrow^* s' \]
-            By the termination lemma $\Bool{b} s'' = \text{ff}$, so:\vspace*{-0.3cm}
+            By the termination lemma $\Bool{b} s'' = \False$, so:\vspace*{-0.3cm}
             \[ \instr{\wif{b}{S}{skip}}{s''} \Rightarrow \instr{skip}{s''} \Rightarrow s'' = s' \]
             Thus:
             \[ \instr{\wwhile{b}{S}}{s} \Rightarrow^* s'' = s' \]
         \item $(\impliedby)$ \vspace{0.2cm} \\
-            By the termination lemma $\Bool{b} s' = \text{ff}$. Then by the composition lemma:\vspace*{-0.3cm}
+            By the termination lemma $\Bool{b} s' = \False$. Then by the composition lemma:\vspace*{-0.3cm}
             \begin{align*}
                 &\instr{(\wwhile{b}{S});\ \wif{b}{S}{skip}}{s}
                 \\&\qquad \Rightarrow^* \instr{\wif{b}{S}{skip}}{s'}

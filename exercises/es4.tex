@@ -5,7 +5,7 @@
     \begin{enumerate}
         \item Define the small step operational semantics of this new iterative command.
         \item Prove the following semantic equivalence:
-        \[ \wwexitif{b}{S}{\neg b}\ \cong_{\text{\tiny SOS}}\ \wwhile{b}{S} \]
+        \[ \wwexitif{b}{S}{\neg b}\ \SOScong\ \wwhile{b}{S} \]
     \end{enumerate}
 }
     \begin{enumerate}
@@ -14,7 +14,7 @@
                 &\instr{\wwexitif{b}{S}{b'}}{s}
                 \\&\quad\ \ \Rightarrow \instr{\wif{b}{(S; \wif{b'}{skip}{\wwexitif{b}{S}{b'}})}{skip}}{s}
             \end{align*}
-        \item We want to prove $\forall S \in \texttt{Stm}, b \in \texttt{Bexp}, s, s' \in \texttt{State}$
+        \item We want to prove $\forall S \in \texttt{Stm}, b \in \texttt{Bexp}, s, s' \in \State$
             \begin{gather*}
                 \instr{\wwexitif{b}{S}{\neg b}}{s} \Rightarrow^* s' \\
                 \iff \\
@@ -23,7 +23,7 @@
             Let $S_{we} = \wwexitif{b}{S}{\neg b}$ for brevity.
             We first distinguish two cases:
             \begin{itemize}
-                \item $\Bool{b} s = \text{ff}$
+                \item $\Bool{b} s = \False$
                     \begin{align*}
                         &\instr{\wwexitif{b}{S}{\neg g}}{s}
                         \\&\quad\ \ \Rightarrow \instr{\wif{b}{(S; \wif{\neg b}{skip}{S_{we}})}{skip}}{s}
@@ -35,7 +35,7 @@
                         \\&\quad\ \ \Rightarrow \instr{skip}{s}
                         \\&\quad\ \ \Rightarrow s
                     \end{align*}
-                \item $\Bool{b} s = \text{tt}$
+                \item $\Bool{b} s = \True$
                     \begin{align*}
                         &\instr{S_{we}}{s}
                         \\&\quad\ \ \Rightarrow \instr{\wif{b}{(S; \wif{\neg b}{skip}{S_{we}})}{skip}}{s}
@@ -53,7 +53,7 @@
                                     $\instr{S; \wif{\neg b}{skip}{S_{we}}}{s} \Rightarrow^0 s'$ is trivially false, so the implication is true.
                                 \item inductive case $k+1$ \vspace*{-0.3cm}
                                     \[ \instr{S; \wif{\neg b}{skip}{S_{we}}}{s} \Rightarrow^{k+1} s' \]
-                                    By the decomposition lemma $\exists k_1, k_2 \in \N, s'' \in \texttt{State} :$
+                                    By the decomposition lemma $\exists k_1, k_2 \in \N, s'' \in \State :$
                                     \begin{gather*}
                                         k_1 + k_2 = k + 1 \qquad\qquad\qquad \instr{S}{s} \Rightarrow^{k_1} s'' \\
                                         \instr{\wif{\neg b}{skip}{S_{we}}}{s''} \Rightarrow^{k_2} s'
@@ -66,7 +66,7 @@
                                     \end{align*}
                                     We distinguish two cases:
                                     \begin{itemize}
-                                        \item $\Bool{b} s'' = \text{ff}$
+                                        \item $\Bool{b} s'' = \False$
                                             \begin{align*}
                                                 &\instr{\wif{\neg b}{skip}{S_{we}}}{s''}
                                                 \\&\qquad\Rightarrow \instr{skip}{s''}
@@ -76,7 +76,7 @@
                                                 \\&\qquad\Rightarrow \instr{skip}{s''}
                                                 \\&\qquad\Rightarrow s''
                                             \end{align*}
-                                        \item $\Bool{b} s'' = \text{tt}$
+                                        \item $\Bool{b} s'' = \True$
                                         \begin{align*}
                                             &\instr{\wif{\neg b}{skip}{S_{we}}}{s''}
                                             \\&\qquad\Rightarrow \instr{S_{we}}{s''}
@@ -97,7 +97,7 @@
                                     $\instr{S; \wwhile{b}{S}}{s} \Rightarrow^0 s'$ is trivially false, so the implication is true.
                                 \item inductive case $k+1$ \vspace*{-0.3cm}
                                     \[ \instr{S; \wwhile{b}{S}}{s} \Rightarrow^{k+1} s' \]
-                                    By the decomposition lemma $\exists k_1, k_2 \in \N, s'' \in \texttt{State} :$
+                                    By the decomposition lemma $\exists k_1, k_2 \in \N, s'' \in \State :$
                                     \begin{gather*}
                                         k_1 + k_2 = k + 1 \qquad\qquad\qquad \instr{S}{s} \Rightarrow^{k_1} s'' \\
                                         \instr{\wwhile{b}{S}}{s''} \Rightarrow^{k_2} s'
@@ -109,7 +109,7 @@
                                     \end{align*}
                                     We distinguish two cases:
                                     \begin{itemize}
-                                        \item $\Bool{b} s'' = \text{ff}$
+                                        \item $\Bool{b} s'' = \False$
                                             \begin{align*}
                                                 &\instr{\wwhile{b}{S}}{s''}
                                                 \\&\qquad\Rightarrow \instr{\wif{b}{(S; \wwhile{b}{S})}{skip}}{s''}
@@ -120,7 +120,7 @@
                                                 \\&\qquad\Rightarrow \instr{skip}{s''}
                                                 \\&\qquad\Rightarrow s''
                                             \end{align*}
-                                        \item $\Bool{b} s'' = \text{tt}$
+                                        \item $\Bool{b} s'' = \True$
                                             \begin{align*}
                                                 &\instr{\wwhile{b}{S}}{s''}
                                                 \\&\qquad\Rightarrow \instr{\wif{b}{(S; \wwhile{b}{S})}{skip}}{s''}

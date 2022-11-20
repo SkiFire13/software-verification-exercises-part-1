@@ -1,8 +1,8 @@
 \begin{exercise}{
     Prove or disprove the following semantic equivalence:
-    \[ \wwhile{b}{S}\ \cong_{\text{\tiny SOS}}\ \wwhile{b}{(\wwhile{b}{S})} \]
+    \[ \wwhile{b}{S}\ \SOScong\ \wwhile{b}{(\wwhile{b}{S})} \]
 }
-    We want to prove $\forall S \in \texttt{Stm}, b \in \texttt{Bexp}, s, s' \in \texttt{State}$
+    We want to prove $\forall S \in \texttt{Stm}, b \in \texttt{Bexp}, s, s' \in \State$
     \begin{gather*}
         \instr{\wwhile{b}{S}}{s} \Rightarrow^* s' \\
         \iff \\
@@ -10,7 +10,7 @@
     \end{gather*}
     We distinguish two cases:
     \begin{itemize}
-        \item $\Bool{b} s = \text{ff}$
+        \item $\Bool{b} s = \False$
             \begin{align*}
                 &\instr{\wwhile{b}{S}}{s}
                 \\&\qquad\Rightarrow \instr{\wif{b}{(S; \wwhile{b}{S})}{skip}}{s}
@@ -22,7 +22,7 @@
                 \\&\qquad\Rightarrow \instr{skip}{s}
                 \\&\qquad\Rightarrow s
             \end{align*}
-        \item $\Bool{b} s = \text{tt}$
+        \item $\Bool{b} s = \True$
             \begin{align*}
                 &\instr{\wwhile{b}{(\wwhile{b}{S})}}{s}
                 \\&\qquad\Rightarrow \instr{\wif{b}{(\wwhile{b}{S}; \wwhile{b}{(\wwhile{b}{S})})}{skip}}{s}
@@ -31,7 +31,7 @@
             \begin{itemize}
                 \item $(\implies)$
                     \[ \instr{\wwhile{b}{S}}{s} \Rightarrow^* s' \]
-                    By the termination lemma $\Bool{b} s' = \text{ff}$. Then, by the composition lemma:
+                    By the termination lemma $\Bool{b} s' = \False$. Then, by the composition lemma:
                     \begin{align*}
                         &\instr{\wwhile{b}{S}; \wwhile{b}{(\wwhile{b}{S})}}{s}
                         \\&\qquad\Rightarrow^* \instr{\wwhile{b}{(\wwhile{b}{S})}}{s'}
@@ -47,7 +47,7 @@
                         \qquad
                         \instr{\wwhile{b}{(\wwhile{b}{S})}}{s''} \Rightarrow^* s'
                     \]
-                    By the termination lemma $\Bool{b} s'' = \text{ff}$. Thus:
+                    By the termination lemma $\Bool{b} s'' = \False$. Thus:
                     \begin{align*}
                         &\instr{\wwhile{b}{(\wwhile{b}{S})}}{s''}
                         \\&\qquad\Rightarrow \instr{\wif{b}{(\wwhile{b}{S}; \wwhile{b}{(\wwhile{b}{S})})}{skip}}{s''}
