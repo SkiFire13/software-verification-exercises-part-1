@@ -18,7 +18,7 @@
             \[ (F\ d)\ s = \cond{\Bool{b}}{d \circ \Sds{S}}{\id}\ s = \id s = s = s' \]
             Thus $\Bool{b} s' = \Bool{b} s = \False$
             \[ (\FIX F)\ s = F(\FIX F)\ s = \cond{\Bool{b}}{\FIX F \circ \Sds{S}}{\id}\ s = \id s = s = s' \]
-            Since $(\FIX F)\ s = s \neq \undef$ and $\Bool{b} s \neq \True$ we have $d\ s = (\FIX F)\ s = s$
+            Since $(\FIX F)\ s = s \neq \undef$ and $\Bool{b} s \neq \True$ we have $d\ s = (\FIX F)\ s = s = s'$
         \item $\Bool{b} s = \True$
             \[ (F\ d)\ s = \cond{\Bool{b}}{d \circ \Sds{S}}{\id}\ s = (d \circ \Sds{S})\ s \]
             By the definition of composition $\exists s'' \in \State.\ \Sds{S}\ s = s'' \neq \undef$
