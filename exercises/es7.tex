@@ -35,6 +35,7 @@
                 \item otherwise, $d\ s'' = (\FIX F)\ s'' = (\FIX F)\ s = d\ s$
             \end{itemize}
     \end{itemize}
+    We already proved in class that such functional $F$ is continuous.
     Thus by the fixpoint induction lemma we have $\FIX F \sqsubseteq d$. which means that:
     \[ \forall s, s' \in \State.\ (\FIX F)\ s = s' \implies d\ s = s' \]
     Assume by contradiction that $\exists s, s' \in \State.\ (\FIX F)\ s = s', \Bool{b} s' = \True $. Then $d\ s = \undef \neq s'$, which means $\FIX F \not\sqsubseteq d$, and that's a contradiction. Thus $(\FIX F)\ s = s' \implies \Bool{b} s' = \False$

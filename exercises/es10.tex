@@ -40,6 +40,7 @@
                 \item otherwise, $(G\ d)\ s = d\ s'' = (\FIX G)\ s'' = (\FIX G)\ s = d\ s$
             \end{itemize}
     \end{itemize}
+    We already proved in class that such functional $G$ is continuous.
     Thus by the fixpoint induction lemma we have $\FIX G \sqsubseteq d$. which means that:
     \[ \forall s, s' \in \State.\ (\FIX G)\ s = s' \implies d\ s = s' \]
     Assume by contradiction that $\exists s, s' \in \State.\ (\FIX G)\ s = s', \Bool{b} s' = \False $. Then $d\ s = \undef \neq s'$, which means $\FIX G \not\sqsubseteq d$, and that's a contradiction. Thus $(\FIX G)\ s = s' \implies \Bool{b} s' = \True$ \\
