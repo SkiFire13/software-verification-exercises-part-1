@@ -110,6 +110,7 @@
                             &\instr{S; (\wif{\neg b}{skip}{S_r}; \wwhile{b}{S_r})}{s}
                             \\&\qquad\Rightarrow^{k} s'
                         \end{align*}
+                        Technically in class we didn't prove the equivalence involving $k$ too, but it should be pretty simple. \\
                         By the decomposition lemma $\exists k_1, k_2 \in \N, s'' \in \State$ such that:
                         \begin{gather*}
                             k_1 + k_2 = k \qquad\qquad\qquad \instr{S}{s} \Rightarrow^{k_1} s'' \\
