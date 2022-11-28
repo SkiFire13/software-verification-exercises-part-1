@@ -1,6 +1,0 @@
-{
-	"name": "Latex",
-	"image": "docker.io/texlive/texlive:latest-medium",
-	"extensions": [ "james-yu.latex-workshop" ],
-	"workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/${localWorkspaceFolderBasename},type=bind,Z"
-}
