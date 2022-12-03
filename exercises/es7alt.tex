@@ -1,0 +1,31 @@
+\par\medskip\noindent \textbf{Solution (alternative).} \rmfamily
+Recall that $\Sds{\wwhile{b}{S}} = \FIX F$ where
+\[ F\ g= \cond{\Bool{b}}{g \circ \Sds{S}}{\id} \]
+And that, since $F$ is continuous, by the Kleene-Knaster-Tarski theorem:
+\[ \FIX{F} = \sqcup \left\{ F^n \bot \mid n \geq 0 \right\} \]
+We want to prove that $F^n \bot s = s' \implies \Bool{b} s' = \False$. We do this by induction on $n$:
+\begin{itemize}
+    \item base case $n = 0$:
+        \[ F^0 \bot\ s = \bot\ s = \undef \neq s' \]
+        Thus the premise is false and the whole implication is true.
+    \item inductive case $n + 1$: \\
+        We assume $F^n \bot\ s = s' \implies \Bool{b} s' = \False$
+        \[ F^{n+1} \bot\ s = F(F^n \bot)\ s = \cond{\Bool{b}}{F^n \bot \circ \Sds{S}}{\id} s \]
+        We distinguish two cases:
+        \begin{itemize}
+            \item $\Bool{b} s = \False$
+                \[ F^{n+1} \bot\ s = \cond{\Bool{b}}{F^n \bot \circ \Sds{S}}{\id} s = \id s = s \]
+                And since $\Bool{b} s = \False$ the implication is true.
+            \item $\Bool{b} s = \True$
+                \[ F^{n+1} \bot\ s = \cond{\Bool{b}}{F^n \bot \circ \Sds{S}}{\id} s = (F^n \bot \circ \Sds{S}) s = s' \]
+                By definition of composition $\exists s'' \in \State.\ \Sds{S} s = s''$, thus:
+                \[ (F^n \bot \circ \Sds{S}) s = F^n \bot\ s'' = s' \]
+                And thus by inductive hypothesis we have $\Bool{b} s' = \False$
+        \end{itemize}
+\end{itemize}
+Then by the lemma 4.25 we have that for any chain $Y$:
+\[ (\sqcup Y)\ s = \begin{cases}
+    g\ s &\quad \text{if } g\ s = s' \neq \undef \text{ for some } g \in Y \\
+    \undef &\quad \text{otherwise}
+\end{cases} \]
+Since $\FIX{F} s = (\sqcup_{n \geq 0} F^n \bot)\ s$ then $\FIX{F} s = s' \implies \exists n.\ F^n \bot\ s = s'$ and thus $\Bool{b} s' = \False$ since we just proved this holds for any $F^n$.
