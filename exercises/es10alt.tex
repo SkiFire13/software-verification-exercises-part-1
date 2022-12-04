@@ -1,0 +1,35 @@
+\par\medskip\noindent \textbf{Solution (alternative).} \rmfamily
+We want to prove:
+\[ \Sds{\wrepeat{(\wrepeat{S}{b})}{b}} = \Sds{\wrepeat{S}{b}} \]
+That is, $\FIX F = \FIX G$ where:
+\begin{align*}
+    F\ g &= \cond{\Bool{b}}{\id}{g} \circ \FIX G \\
+    G\ g &= \cond{\Bool{b}}{\id}{g} \circ \Sds{S}
+\end{align*}
+We first prove the termination lemma for $\wrepeat{S}{b}$, that is:
+\[ \Sds{\wrepeat{S}{b}} s = s' \neq \undef \implies \Bool{b} s' = \True \]
+We proved in class that:
+\[ \wrepeat{S}{b} \DScong S;\wwhile{\neg b}{S} \]
+that is:
+\[ \Sds{\wrepeat{S}{b}} = \Sds{S;\wwhile{\neg b}{S}} = \Sds{\wwhile{\neg b}{S}} \circ \Sds{S} \]
+Thus if $\Sds{\wrepeat{S}{b}} s = s'$ then $(\Sds{\wwhile{\neg b}{S}} \circ \Sds{S})\ s = s'$. \\
+By the definition of composition:
+\[ \exists s'' \in \State.\ \Sds{S} s = s'' \neq \undef, \Sds{\wwhile{\neg b}{S}} s'' = s' \]
+By the exercise 7, we get $\Bool{\neq b} s' = \False$, thus $\Bool{b} s' = \True$ \\
+Now we can finally prove $\FIX F = \FIX G$, that is:
+\[ \forall s, s' \in \State.\ (\FIX F)\ s = s' \iff (\FIX G)\ s = s' \]
+\begin{itemize}
+    \item $(\implies)$
+        \[ (\FIX F)\ s = F(\FIX F)\ s = (\cond{\Bool{b}}{\id}{\FIX F} \circ \FIX G)\ s \]
+        By the definition of composition $\exists s'' \in \State.\ (\FIX G)\ s = s'' \neq \undef$ \\
+        By the termination lemma we just proved we get $\Bool{b} s'' = \True$, then:
+        \[ \cond{\Bool{b}}{\id}{\FIX F}\ s'' = \id s'' = s'' = s' \]
+        And so $(\FIX G)\ s = s'' = s'$
+    \item $(\impliedby)$ \\
+        By the termination lemma we just proved we get $\Bool{b} s = \True$, then:
+        \begin{align*}
+            (\FIX F)\ s &= F(\FIX F)\ s = (\cond{\Bool{b}}{\id}{\FIX F} \circ \FIX G)\ s = \\
+            &= \cond{\Bool{b}}{\id}{\FIX F}\ s' = \id s' = \\
+            &= s'
+        \end{align*}
+\end{itemize}

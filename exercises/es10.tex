@@ -48,13 +48,13 @@
     \[ \forall s, s' \in \State.\ (\FIX F)\ s = s' \iff (\FIX G)\ s = s' \]
     \begin{itemize}
         \item $(\implies)$
-            \[ \FIX F = F(\FIX F) = \cond{\Bool{b}}{\id}{\FIX F} \circ \FIX G \]
-            By the definition of composition $\exists s'' \in \State.\ (\FIX G)\ s = s'' \neq \undef,$ \\ $\cond{\Bool{b}}{\id}{\FIX F}\ s'' = s'$ \\
-            By the termination lemma we just proved we get $\Bool{b}\ s'' = \True$, then:
+            \[ (\FIX F)\ s = F(\FIX F)\ s = (\cond{\Bool{b}}{\id}{\FIX F} \circ \FIX G)\ s \]
+            By the definition of composition $\exists s'' \in \State.\ (\FIX G)\ s = s'' \neq \undef$ \\
+            By the termination lemma we just proved we get $\Bool{b} s'' = \True$, then:
             \[ \cond{\Bool{b}}{\id}{\FIX F}\ s'' = \id s'' = s'' = s' \]
-            And so $(\FIX G)\ s = s'' = s' = (\FIX F)\ s$
+            And so $(\FIX G)\ s = s'' = s'$
         \item $(\impliedby)$ \\
-            By the termination lemma we just proved we get $\Bool{b}\ s = \True$, then:
+            By the termination lemma we just proved we get $\Bool{b} s = \True$, then:
             \begin{align*}
                 (\FIX F)\ s &= F(\FIX F)\ s = (\cond{\Bool{b}}{\id}{\FIX F} \circ \FIX G)\ s = \\
                 &= \cond{\Bool{b}}{\id}{\FIX F}\ s' = \id s' = \\
