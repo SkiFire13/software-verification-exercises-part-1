@@ -26,7 +26,7 @@
                 \item $\cup S$ is an upper bound of $S$ \\
                     By definition $S_i \in S \implies S_i \subseteq \cup S$ thus $\cup S$ is an upper bound of $S$
                 \item $\cup S$ is the least upper bound of $S$ \\
-                    Let $T$ be an upper bound of $S$, thus $\forall S_i \in S.\ T \subseteq S_i$
+                    Let $T$ be an upper bound of $S$, thus $\forall S_i \in S.\ S_i \subseteq T$
                     \[ \forall x \in \cup S.\ \exists S_i.\ x \in S_i \implies x \in T \implies \cup S \subseteq T \]
                     Thus $\cup S$ is the least upper bound of $S$.
             \end{itemize}
@@ -38,7 +38,7 @@
                 &x \in \cup \left\{f(X) \mid X \in Y\right\} \\
                 \iff& \exists X \in Y.\ x \in f(X) \\
                 \iff& \exists X \in Y.\ \exists z \in X.\ x \leq z \\
-                \iff& \exists z \in Y.\ x \leq z \\
+                \iff& \exists z \in \cup Y.\ x \leq z \\
                 \iff& x \in f(\cup Y)
             \end{align*}
             Thus $\cup \left\{f(X) \mid X \in Y\right\} = f(\cup Y)$
