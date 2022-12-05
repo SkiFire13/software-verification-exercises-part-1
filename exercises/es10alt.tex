@@ -15,7 +15,7 @@ that is:
 Thus if $\Sds{\wrepeat{S}{b}} s = s'$ then $(\Sds{\wwhile{\neg b}{S}} \circ \Sds{S})\ s = s'$. \\
 By the definition of composition:
 \[ \exists s'' \in \State.\ \Sds{S} s = s'' \neq \undef, \Sds{\wwhile{\neg b}{S}} s'' = s' \]
-By the exercise 7, we get $\Bool{\neq b} s' = \False$, thus $\Bool{b} s' = \True$ \\
+By the exercise 7, we get $\Bool{\neg b} s' = \False$, thus $\Bool{b} s' = \True$ \\
 Now we can finally prove $\FIX F = \FIX G$, that is:
 \[ \forall s, s' \in \State.\ (\FIX F)\ s = s' \iff (\FIX G)\ s = s' \]
 \begin{itemize}
