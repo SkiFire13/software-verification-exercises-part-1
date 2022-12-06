@@ -15,20 +15,15 @@
 }
     \begin{enumerate}
         \item[\textbf{A.}]
-            Given a chain $S \subseteq dp(P)$ we can show that the least upper bounds exists and is $\cup S$.
+            Given a chain $Y \subseteq dp(P)$ we can show that the least upper bound exists and is $\cup_{S \in Y} S$.
             \begin{itemize}
-                \item $\cup S \in dp(P)$
-                    If $x \in S$ then $\exists S_i \in S.\ x \in S_i$. Since $S \subseteq dp(P)$ then $S_i \in dp(P)$ and thus
-                    \[ \forall x \in S_i.\ \forall y \in P.\ y \leq x \implies y \in S_i \]
-                    Since $x \in S_i$ and $y \in S_i \implies y \in \cup S$ we have:
-                    \[ \forall x \in S.\ \forall y \in P.\ y \leq x \implies y \in \cup S \]
-                    And thus $\cup S \in dp(P)$
-                \item $\cup S$ is an upper bound of $S$ \\
-                    By definition $S_i \in S \implies S_i \subseteq \cup S$ thus $\cup S$ is an upper bound of $S$
-                \item $\cup S$ is the least upper bound of $S$ \\
-                    Let $T$ be an upper bound of $S$, thus $\forall S_i \in S.\ S_i \subseteq T$
-                    \[ \forall x \in \cup S.\ \exists S_i.\ x \in S_i \implies x \in T \implies \cup S \subseteq T \]
-                    Thus $\cup S$ is the least upper bound of $S$.
+                \item $\cup_{S \in Y} S \in dp(P)$
+                    If $x \in \cup_{S \in Y}$ then $\exists S \in Y.\ x \in S \in dp(P)$, thus
+                    \[ \forall x \in S.\ \forall y \in P.\ y \leq x \implies y \in S \]
+                    Since $x \in S$ and $y \in S \implies y \in \cup_{S \in Y} S$ we have:
+                    \[ \forall x \in S.\ \forall y \in P.\ y \leq x \implies y \in \cup_{S \in Y} S \]
+                    And thus $\cup_{S \in Y} S \in dp(P)$
+                \item $\cup_{S \in Y} S$ is already the least upper bound with respect to $\subseteq$
             \end{itemize}
         \item[\textbf{B.}]
             Given $x \in f(X)$ and $y \in P$ we have $y \leq x$ and we want to show $y \in f(X)$. Since $x \in f(X)$ then $\exists z \in X.\ x \leq z$, then $y \leq x \leq z$ and thus $\exists z \in X.\ y \leq z$. So $y \in f(X)$ and $f$ is well defined.
