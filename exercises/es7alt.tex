@@ -1,31 +1,39 @@
 \alternativeSolution
 Recall that $\Sds{\wwhile{b}{S}} = \FIX F$ where
 \[ F\ g= \cond{\Bool{b}}{g \circ \Sds{S}}{\id} \]
-And that, since $F$ is continuous, by the Kleene-Knaster-Tarski theorem:
-\[ \FIX{F} = \sqcup \left\{ F^n \bot \mid n \geq 0 \right\} \]
-We want to prove that $F^n \bot s = s' \implies \Bool{b} s' = \False$. We do this by induction on $n$:
+Then consider the following function:
+\[
+    d\ s = \begin{cases}
+        \undef &\quad \text{if } (\FIX F)\ s = s' \neq \undef, \Bool{b} s' = \True \\
+        (\FIX F)\ s &\quad \text{otherwise}
+    \end{cases}
+\]
+We prove that $F d \sqsubseteq d$, that is:
+\[ \forall s, s' \in \State.\ (F\ d)\ s = s' \implies d\ s = s' \]
+We distinguish two cases:
 \begin{itemize}
-    \item base case $n = 0$:
-        \[ F^0 \bot\ s = \bot\ s = \undef \neq s' \]
-        Thus the premise is false and the whole implication is true.
-    \item inductive case $n + 1$: \\
-        We assume $F^n \bot\ s = s' \implies \Bool{b} s' = \False$
-        \[ F^{n+1} \bot\ s = F(F^n \bot)\ s = \cond{\Bool{b}}{F^n \bot \circ \Sds{S}}{\id} s \]
+    \item $\Bool{b} s = \False$
+        \[ (F\ d)\ s = \cond{\Bool{b}}{d \circ \Sds{S}}{\id}\ s = \id s = s = s' \]
+        Thus $\Bool{b} s' = \Bool{b} s = \False$
+        \[ (\FIX F)\ s = F(\FIX F)\ s = \cond{\Bool{b}}{\FIX F \circ \Sds{S}}{\id}\ s = \id s = s = s' \]
+        Since $(\FIX F)\ s = s \neq \undef$ and $\Bool{b} s \neq \True$ we have $d\ s = (\FIX F)\ s = s = s'$
+    \item $\Bool{b} s = \True$
+        \[ (F\ d)\ s = \cond{\Bool{b}}{d \circ \Sds{S}}{\id}\ s = (d \circ \Sds{S})\ s \]
+        By the definition of composition $\exists s'' \in \State.\ \Sds{S}\ s = s'' \neq \undef$
+        \begin{gather*}
+            (d \circ \Sds{S})\ s = d\ s'' \\
+            \begin{aligned}
+                (\FIX F)\ s &= F(\FIX F)\ s = \cond{\Bool{b}}{\FIX F \circ \Sds{S}}{\id}\ s \\
+                &= (\FIX F \circ \Sds{S})\ s = (\FIX F)\ s''
+            \end{aligned}
+        \end{gather*}
         We distinguish two cases:
         \begin{itemize}
-            \item $\Bool{b} s = \False$
-                \[ F^{n+1} \bot\ s = \cond{\Bool{b}}{F^n \bot \circ \Sds{S}}{\id} s = \id s = s \]
-                And since $\Bool{b} s = \False$ the implication is true.
-            \item $\Bool{b} s = \True$
-                \[ F^{n+1} \bot\ s = \cond{\Bool{b}}{F^n \bot \circ \Sds{S}}{\id} s = (F^n \bot \circ \Sds{S}) s = s' \]
-                By definition of composition $\exists s'' \in \State.\ \Sds{S} s = s''$, thus:
-                \[ (F^n \bot \circ \Sds{S}) s = F^n \bot\ s'' = s' \]
-                And thus by inductive hypothesis we have $\Bool{b} s' = \False$
+            \item $(\FIX F)\ s = (\FIX F)\ s'' = s''' \neq \undef, \Bool{b} s''' = \True$, then $d\ s'' = \undef = d\ s$
+            \item otherwise, $d\ s'' = (\FIX F)\ s'' = (\FIX F)\ s = d\ s$
         \end{itemize}
 \end{itemize}
-Then by the lemma 4.25 we have that for any chain $Y$:
-\[ (\sqcup Y)\ s = \begin{cases}
-    g\ s &\quad \text{if } g\ s = s' \neq \undef \text{ for some } g \in Y \\
-    \undef &\quad \text{otherwise}
-\end{cases} \]
-Since $\FIX{F} s = (\sqcup_{n \geq 0} F^n \bot)\ s$ then $\FIX{F} s = s' \implies \exists n.\ F^n \bot\ s = s'$ and thus $\Bool{b} s' = \False$ since we just proved this holds for any $F^n$.
+We already proved in class that such functional $F$ is continuous.
+Thus by the fixpoint induction lemma we have $\FIX F \sqsubseteq d$. which means that:
+\[ \forall s, s' \in \State.\ (\FIX F)\ s = s' \implies d\ s = s' \]
+Assume by contradiction that $\exists s, s' \in \State.\ (\FIX F)\ s = s', \Bool{b} s' = \True $. Then $d\ s = \undef \neq s'$, which means $\FIX F \not\sqsubseteq d$, and that's a contradiction. Thus $(\FIX F)\ s = s' \implies \Bool{b} s' = \False$
